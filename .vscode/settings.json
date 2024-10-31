@@ -13,5 +13,9 @@
 	],
 	"workbench.editorAssociations": {
 		"*.db": "sqlite-viewer.view"
+	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
 	}
 }

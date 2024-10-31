@@ -20,6 +20,8 @@ import {
 } from '@remix-run/react'
 import { withSentry } from '@sentry/remix'
 import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useChangeLanguage } from 'remix-i18next/react'
 import { HoneypotProvider } from 'remix-utils/honeypot/react'
 import appleTouchIconAssetUrl from './assets/favicons/apple-touch-icon.png'
 import faviconAssetUrl from './assets/favicons/favicon.svg'
@@ -37,6 +39,7 @@ import {
 } from './components/ui/dropdown-menu.tsx'
 import { Icon, href as iconsHref } from './components/ui/icon.tsx'
 import { EpicToaster } from './components/ui/sonner.tsx'
+import { i18nextServer, localeCookie } from './modules/i18next/i18next.ts'
 import {
 	ThemeSwitch,
 	useOptionalTheme,
@@ -54,9 +57,6 @@ import { type Theme, getTheme } from './utils/theme.server.ts'
 import { makeTimings, time } from './utils/timing.server.ts'
 import { getToast } from './utils/toast.server.ts'
 import { useOptionalUser, useUser } from './utils/user.ts'
-import { i18nextServer, localeCookie } from './modules/i18next/i18next.ts'
-import { useTranslation } from 'react-i18next'
-import { useChangeLanguage } from 'remix-i18next/react'
 
 export const links: LinksFunction = () => {
 	return [
@@ -90,11 +90,11 @@ export const handle = {
 	// will need to load. This key can be a single string or an array of strings.
 	// TIP: In most cases, you should set this to your defaultNS from your i18n config
 	// or if you did not set one, set it to the i18next default namespace "translation"
-	i18n: "common",
-};
+	i18n: 'common',
+}
 
 export async function loader({ request }: LoaderFunctionArgs) {
-	const locale = await i18nextServer.getLocale(request);
+	const locale = await i18nextServer.getLocale(request)
 	const timings = makeTimings('root loader')
 	const userId = await time(() => getUserId(request), {
 		timings,
@@ -104,26 +104,26 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 	const user = userId
 		? await time(
-			() =>
-				prisma.user.findUniqueOrThrow({
-					select: {
-						id: true,
-						name: true,
-						username: true,
-						image: { select: { id: true } },
-						roles: {
-							select: {
-								name: true,
-								permissions: {
-									select: { entity: true, action: true, access: true },
+				() =>
+					prisma.user.findUniqueOrThrow({
+						select: {
+							id: true,
+							name: true,
+							username: true,
+							image: { select: { id: true } },
+							roles: {
+								select: {
+									name: true,
+									permissions: {
+										select: { entity: true, action: true, access: true },
+									},
 								},
 							},
 						},
-					},
-					where: { id: userId },
-				}),
-			{ timings, type: 'find user', desc: 'find user in root' },
-		)
+						where: { id: userId },
+					}),
+				{ timings, type: 'find user', desc: 'find user in root' },
+			)
 		: null
 	if (userId && !user) {
 		console.info('something weird happened')
@@ -148,7 +148,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 			ENV: getEnv(),
 			toast,
 			honeyProps,
-			locale
+			locale,
 		},
 		{
 			headers: combineHeaders(
@@ -173,18 +173,22 @@ function Document({
 	theme = 'light',
 	env = {},
 	locale,
-	dir
+	dir,
 }: {
 	children: React.ReactNode
 	nonce: string
 	theme?: Theme
-	env?: Record<string, string>,
-	locale?: string,
+	env?: Record<string, string>
+	locale?: string
 	dir: string
 }) {
 	const allowIndexing = ENV.ALLOW_INDEXING !== 'false'
 	return (
-		<html lang={locale ?? "en"} className={`${theme} h-full overflow-x-hidden`} dir={dir}>
+		<html
+			lang={locale ?? 'en'}
+			className={`${theme} h-full overflow-x-hidden`}
+			dir={dir}
+		>
 			<head>
 				<ClientHintCheck nonce={nonce} />
 				<Meta />
@@ -213,12 +217,18 @@ function Document({
 export function Layout({ children }: { children: React.ReactNode }) {
 	// if there was an error running the loader, data could be missing
 	const data = useLoaderData<typeof loader | null>()
-	const { i18n } = useTranslation();
+	const { i18n } = useTranslation()
 	const nonce = useNonce()
 	const theme = useOptionalTheme()
 	useChangeLanguage(data?.locale ?? '')
 	return (
-		<Document nonce={nonce} theme={theme} env={data?.ENV} locale={data?.locale} dir={i18n.dir()}>
+		<Document
+			nonce={nonce}
+			theme={theme}
+			env={data?.ENV}
+			locale={data?.locale}
+			dir={i18n.dir()}
+		>
 			{children}
 		</Document>
 	)
@@ -265,8 +275,8 @@ function App() {
 				<div className="container flex justify-between pb-5">
 					<Logo />
 					<ThemeSwitch userPreference={data.requestInfo.userPrefs.theme} />
-					<button onClick={() => nav("?lng=en")}>en</button>
-					<button onClick={() => nav("?lng=zh")}>zh</button>
+					<button onClick={() => nav('?lng=en')}>en</button>
+					<button onClick={() => nav('?lng=zh')}>zh</button>
 				</div>
 			</div>
 			<EpicToaster closeButton position="top-center" theme={theme} />
