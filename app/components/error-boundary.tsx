@@ -12,9 +12,13 @@ type StatusHandler = (info: {
 	params: Record<string, string | undefined>
 }) => JSX.Element | null
 
+export const TEST_IDS = {
+	ERROR_BOUNDARY: 'error-boundary',
+} as const
+
 export function GeneralErrorBoundary({
 	defaultStatusHandler = ({ error }) => (
-		<p>
+		<p data-testid={TEST_IDS.ERROR_BOUNDARY}>
 			{error.status} {error.data}
 		</p>
 	),
@@ -44,3 +48,5 @@ export function GeneralErrorBoundary({
 		</div>
 	)
 }
+
+GeneralErrorBoundary.testIds = TEST_IDS

@@ -15,7 +15,6 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 	useMatches,
-	useNavigate,
 	useSubmit,
 } from '@remix-run/react'
 import { withSentry } from '@sentry/remix'
@@ -245,7 +244,6 @@ function App() {
 	useToast(data.toast)
 
 	useChangeLanguage(data.locale)
-	const nav = useNavigate()
 
 	return (
 		<>
