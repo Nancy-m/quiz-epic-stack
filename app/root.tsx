@@ -25,6 +25,7 @@ import { useChangeLanguage } from 'remix-i18next/react'
 import { HoneypotProvider } from 'remix-utils/honeypot/react'
 import appleTouchIconAssetUrl from './assets/favicons/apple-touch-icon.png'
 import faviconAssetUrl from './assets/favicons/favicon.svg'
+import LanguageSelect from './components/common/LanguageSelect/index.tsx'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { EpicProgress } from './components/progress-bar.tsx'
 import { SearchBar } from './components/search-bar.tsx'
@@ -275,8 +276,7 @@ function App() {
 				<div className="container flex justify-between pb-5">
 					<Logo />
 					<ThemeSwitch userPreference={data.requestInfo.userPrefs.theme} />
-					<button onClick={() => nav('?lng=en')}>en</button>
-					<button onClick={() => nav('?lng=zh')}>zh</button>
+					<LanguageSelect />
 				</div>
 			</div>
 			<EpicToaster closeButton position="top-center" theme={theme} />
