@@ -1,6 +1,6 @@
 To add Shadcn/UI components
 
-### 1. Run the command from the shad
+### 1. Run the command from the shadcn/ui cli
 
 Go to
 [https://ui.shadcn.com/docs/components/accordion](https://ui.shadcn.com/docs/components/accordion),
@@ -35,3 +35,14 @@ import { Icon } from './icon.tsx'
 // <Icon1 ... /> <-- replace this
 <Icon name="icon-1" title="icon-1" className="h-4 w-4" />
 ```
+
+### 4. Update the Tailwind CSS
+
+#### a. Update the Tailwind CSS in the `tailwind.config.ts` file.
+
+The Shadcn CLI might overwrite some of the Tailwind CSS variables, particularly
+in the extend section. You will need to copy the new variables from the
+`tailwind.config.ts` file into the `app/utils/extended-theme.ts` file and set
+the extend section in the `tailwind.config.ts` file back to use the
+`extendedTheme` object. Pay attention to the git diff to see which variables
+were added and how to restore the `tailwind.config.ts` file.
