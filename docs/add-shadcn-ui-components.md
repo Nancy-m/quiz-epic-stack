@@ -20,8 +20,12 @@ import { cn } from '#app/utils/misc.tsx'
 Go here to find the icon code. `https://lucide.dev/icons/`
 
 ```bash
-npx sly add lucide-icons icon-1 icon-2 icon-...
+// npx sly add lucide-icons <...icons list> #--overwrite (if necessary*)
+npx sly add lucide-icons icon-1 icon-2
 ```
+
+_\* You may need to overwrite some of the icons which were added in the base
+project from radix-ui/icons._
 
 #### b. Replace the Icons in the Shadcn/UI component.
 
