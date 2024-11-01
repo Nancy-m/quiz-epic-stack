@@ -9,7 +9,7 @@ import { prisma } from '#app/utils/db.server.ts'
 import { getDomainUrl } from '#app/utils/misc.tsx'
 import { redirectWithToast } from '#app/utils/toast.server.ts'
 import { generateTOTP, verifyTOTP } from '#app/utils/totp.server.ts'
-import { type twoFAVerifyVerificationType } from '../settings+/profile.two-factor.verify.tsx'
+import { type twoFAVerifyVerificationType } from '../../settings+/profile.two-factor.verify.tsx'
 import {
 	handleVerification as handleLoginTwoFactorVerification,
 	shouldRequestTwoFA,

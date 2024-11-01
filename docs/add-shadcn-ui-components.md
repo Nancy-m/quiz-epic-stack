@@ -1,4 +1,4 @@
-To add Shadcn/UI components
+# How To Add Shadcn/UI Components
 
 ### 1. Run the command from the shadcn/ui cli
 
