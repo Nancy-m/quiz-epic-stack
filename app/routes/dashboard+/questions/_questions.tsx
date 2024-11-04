@@ -1,18 +1,18 @@
 import { $path } from 'remix-routes'
-import { Heading } from '#app/components/routes/dashboard/Common/Heading'
+import { Heading } from '#app/components/routes/dashboard/Common/Heading/index.js'
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
 
 export const handle: BreadcrumbHandle = {
 	breadcrumb: {
-		title: 'Quizzes',
-		path: $path('/dashboard/quizzes'),
+		title: 'Questions',
+		path: $path('/dashboard/questions'),
 	},
 }
 
-export default function PageOne() {
+export default function Questions() {
 	return (
 		<div>
-			<Heading>Quizzes</Heading>
+			<Heading>Questions</Heading>
 		</div>
 	)
 }

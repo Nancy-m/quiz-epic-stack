@@ -26,7 +26,7 @@ export default function LanguageSelect() {
 	>
 	const handleLanguageChange = (value: string) => {
 		void i18n.changeLanguage(value)
-		fetcher.load(`?lng=${value}`)
+		fetcher.load(`/?lng=${value}`)
 	}
 
 	return (

@@ -26,7 +26,7 @@ export default function Dashboard() {
 			<SidebarProvider data-testid={TEST_IDS.sidebarProvider}>
 				<DashboardSidebar />
 				<div className="flex w-full flex-col">
-					<div className="bg-sidebar border-sidebar-accent flex w-full items-center gap-10 border-b-2 px-4 py-6">
+					<div className="flex w-full items-center gap-10 border-b-2 border-sidebar-accent bg-sidebar px-4 py-6">
 						<SidebarTrigger />
 					</div>
 					<div className="flex flex-col items-center">

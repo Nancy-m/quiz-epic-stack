@@ -44,7 +44,7 @@ const BreadcrumbObj = ({
 		<>
 			<BreadcrumbItem>
 				{path === pathname ? (
-					<BreadcrumbPage>{title}</BreadcrumbPage>
+					<BreadcrumbPage className="font-bold">{title}</BreadcrumbPage>
 				) : (
 					<BreadcrumbLink href={path}>{title}</BreadcrumbLink>
 				)}
