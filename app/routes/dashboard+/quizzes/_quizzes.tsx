@@ -51,12 +51,6 @@ const action = async ({ request }: ActionFunctionArgs) => {
 }
 
 export default function PageOne() {
-	// const [selectedQuizzes, setSelectedQuizzes] = useState<number[]>([])
-	// const handleSelectQuiz = (id: number, checked: boolean) => {
-	// 	setSelectedQuizzes((prev) =>
-	// 		checked ? [...prev, id] : prev.filter((i) => i !== id),
-	// 	)
-	// }
 	return (
 		<div className="flex flex-col gap-10">
 			<div className="flex items-center justify-between">
@@ -82,7 +76,7 @@ export default function PageOne() {
 					{/* <TableCaption>A list of your recent invoices.</TableCaption> */}
 					<TableHeader>
 						<TableRow>
-							<TableHead>
+							<TableHead className="flex items-center">
 								<Checkbox />
 							</TableHead>
 							<TableHead className="w-[100px]">UID</TableHead>
@@ -95,13 +89,8 @@ export default function PageOne() {
 					<TableBody>
 						{quizzes.map((quiz) => (
 							<TableRow key={quiz.id}>
-								<TableCell>
-									<Checkbox
-									// checked={selectedQuizzes.includes(quiz.id)}
-									// onCheckedChange={(checked) =>
-									// 	handleSelectQuiz(quiz.id, checked as boolean)
-									// }
-									/>
+								<TableCell className="flex items-center">
+									<Checkbox />
 								</TableCell>
 								<TableCell>
 									{quiz.uid.substring(0, 6) + '...'}
