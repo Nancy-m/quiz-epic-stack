@@ -96,4 +96,6 @@ export default function HeroSection() {
 	)
 }
 
-HeroSection.i18n = [NS_HERO_SECTION]
+HeroSection.handle = {
+	i18n: [NS_HERO_SECTION],
+} as const
