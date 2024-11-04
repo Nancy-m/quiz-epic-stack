@@ -36,6 +36,8 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '#app/components/ui/tooltip.js'
+import { cn } from '#app/utils/misc.js'
+import quizzes from '../../../../sampleData/quizzes'
 
 export const handle: BreadcrumbHandle = {
 	breadcrumb: {
@@ -43,35 +45,6 @@ export const handle: BreadcrumbHandle = {
 		path: $path('/dashboard/quizzes'),
 	},
 }
-
-const quizzes = [
-	{
-		id: 1,
-		uid: 'c4ca4238a0b923820dcc509a6f75849b',
-		title: 'Quiz 1',
-		description: 'Quiz 1 description',
-		availability: {
-			start: '2023-01-01T00:00:00.000Z',
-			end: '2023-01-31T23:59:59.999Z',
-		},
-		questionCount: 10,
-		passingScore: 70,
-		state: 'pending',
-	},
-	{
-		id: 2,
-		uid: 'c81e728d9d4c2f636f067f89cc14862c',
-		title: 'Quiz 2',
-		description: 'Quiz 2 description',
-		availability: {
-			start: '2023-02-01T00:00:00.000Z',
-			end: '2023-02-28T23:59:59.999Z',
-		},
-		questionCount: 15,
-		passingScore: 80,
-		state: 'collecting responses',
-	},
-]
 
 const quizStates = [
 	{
@@ -191,7 +164,11 @@ export default function PageOne() {
 											(state) => state.state === quiz.state,
 										)
 										if (!state) return null
-										return <Badge className={state.color}>{state.state}</Badge>
+										return (
+											<Badge className={cn(state.color, 'text-nowrap')}>
+												{state.state}
+											</Badge>
+										)
 									})()}
 								</TableCell>
 								<TableCell className="flex justify-end gap-1 text-right">
