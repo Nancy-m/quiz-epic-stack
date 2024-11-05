@@ -16,6 +16,7 @@ import {
 	DropdownMenuTrigger,
 } from '#app/components/ui/dropdown-menu.js'
 import { Icon } from '#app/components/ui/icon.js'
+import { Input } from '#app/components/ui/input.js'
 import {
 	Select,
 	SelectItem,
@@ -36,8 +37,8 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from '#app/components/ui/tooltip.js'
+import quizzes, { QUIZ_STATUS } from '#app/sampleData/quizzes'
 import { cn } from '#app/utils/misc.js'
-import quizzes from '../../../../sampleData/quizzes'
 
 export const handle: BreadcrumbHandle = {
 	breadcrumb: {
@@ -46,24 +47,24 @@ export const handle: BreadcrumbHandle = {
 	},
 }
 
-const quizStates = [
+const quizStatuses = [
 	{
-		state: 'pending',
-		color: 'bg-blue-500/10 text-blue-500 border-blue-500 hover:bg-blue-500/20',
+		label: QUIZ_STATUS.pending,
+		color: 'bg-blue-400/5 text-blue-400 border-blue-400 hover:bg-blue-400/10',
 	},
 	{
-		state: 'collecting responses',
+		label: QUIZ_STATUS.active,
 		color:
-			'bg-green-500/10 text-green-500 border-green-500 hover:bg-green-500/20',
+			'bg-green-400/5 text-green-400 border-green-400 hover:bg-green-400/10',
 	},
 	{
-		state: 'paused',
+		label: QUIZ_STATUS.paused,
 		color:
-			'bg-yellow-500/10 text-yellow-500 border-yellow-500 hover:bg-yellow-500/20',
+			'bg-yellow-400/5 text-yellow-400 border-yellow-400 hover:bg-yellow-400/10',
 	},
 	{
-		state: 'completed',
-		color: 'bg-red-500/10 text-red-500 border-red-500 hover:bg-red-500/20',
+		label: QUIZ_STATUS.completed,
+		color: 'bg-red-400/5 text-red-400 border-red-400 hover:bg-red-400/10',
 	},
 ] as const
 
@@ -100,11 +101,29 @@ export default function PageOne() {
 				</div>
 			</div>
 			<Form method="post" action=".">
+				<div className="mb-4 flex flex-row justify-items-start gap-2">
+					<div className="flex flex-row gap-2">
+						<div className="relative">
+							<Icon
+								name="search"
+								className="absolute left-2 top-1/2 -translate-y-1/2"
+							/>
+							<Input placeholder="Search" className="pl-8" />
+						</div>
+						<div className="relative">
+							<Icon
+								name="calendar"
+								className="absolute left-2 top-1/2 -translate-y-1/2"
+							/>
+							<Input placeholder="Filter by Date" className="pl-8" />
+						</div>
+					</div>
+				</div>
 				<Table>
 					{/* <TableCaption>A list of your recent invoices.</TableCaption> */}
 					<TableHeader>
-						<TableRow>
-							<TableHead className="flex items-center justify-center">
+						<TableRow className="text-nowrap">
+							<TableHead className="flex items-center justify-center font-bold">
 								<Checkbox
 									defaultChecked={false}
 									onCheckedChange={(checked) =>
@@ -116,14 +135,16 @@ export default function PageOne() {
 									}
 								/>
 							</TableHead>
-							<TableHead className="w-[100px]">Reference&nbsp;Id</TableHead>
-							<TableHead>Title</TableHead>
-							<TableHead>Description</TableHead>
-							<TableHead>Availability</TableHead>
-							<TableHead>Question Count</TableHead>
-							<TableHead>Passing Score</TableHead>
-							<TableHead>State</TableHead>
-							<TableHead className="text-right">Actions</TableHead>
+							<TableHead className="w-[100px] font-bold">
+								Reference&nbsp;Id
+							</TableHead>
+							<TableHead className="font-bold">Title</TableHead>
+							<TableHead className="font-bold">Description</TableHead>
+							<TableHead className="font-bold">Availability</TableHead>
+							<TableHead className="font-bold">Question Count</TableHead>
+							<TableHead className="font-bold">Passing Score</TableHead>
+							<TableHead className="font-bold">Status</TableHead>
+							<TableHead className="text-right font-bold">Actions</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -160,18 +181,18 @@ export default function PageOne() {
 								<TableCell>{quiz.passingScore}</TableCell>
 								<TableCell>
 									{(() => {
-										const state = quizStates.find(
-											(state) => state.state === quiz.state,
+										const state = quizStatuses.find(
+											(status) => status.label === quiz.status,
 										)
 										if (!state) return null
 										return (
 											<Badge className={cn(state.color, 'text-nowrap')}>
-												{state.state}
+												&#9679;&nbsp;{state.label}
 											</Badge>
 										)
 									})()}
 								</TableCell>
-								<TableCell className="flex justify-end gap-1 text-right">
+								<TableCell className="text-nowrap">
 									<Tooltip delayDuration={700}>
 										<TooltipTrigger>
 											<Button variant="ghost" size="sm">
@@ -195,7 +216,7 @@ export default function PageOne() {
 											<Button
 												variant="ghost"
 												size="sm"
-												className="text-destructive hover:bg-destructive/20 hover:text-destructive"
+												className="text-destructive hover:bg-destructive/20 hover:text-destructive dark:text-red-400"
 											>
 												<Icon name="trash" />
 											</Button>

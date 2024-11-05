@@ -1,3 +1,5 @@
+import { type SerializeFrom } from '@remix-run/node'
+import { useRouteLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import { $path } from 'remix-routes'
 import LanguageSelect from '#app/components/common/LanguageSelect/index.js'
@@ -13,6 +15,8 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from '#app/components/ui/sidebar'
+import { type loader } from '#app/root.js'
+import { ThemeSwitch } from '#app/routes/resources+/theme-switch.js'
 
 const menuItems = [
 	{
@@ -50,6 +54,9 @@ const menuItems = [
 export const DashboardSidebar = () => {
 	const { t } = useTranslation('DashboardSidebar')
 
+	const data = useRouteLoaderData<typeof loader>('root') as SerializeFrom<
+		typeof loader
+	>
 	return (
 		<Sidebar data-testid="dashboard-sidebar">
 			<SidebarContent>
@@ -73,6 +80,7 @@ export const DashboardSidebar = () => {
 			</SidebarContent>
 			<SidebarFooter>
 				<LanguageSelect />
+				<ThemeSwitch userPreference={data.requestInfo.userPrefs.theme} />
 			</SidebarFooter>
 		</Sidebar>
 	)

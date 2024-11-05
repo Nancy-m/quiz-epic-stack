@@ -1,3 +1,10 @@
+export const QUIZ_STATUS = {
+	pending: 'pending',
+	active: 'active',
+	paused: 'paused',
+	completed: 'completed',
+} as const
+
 const quizzes = [
 	{
 		id: 1,
@@ -11,7 +18,7 @@ const quizzes = [
 		},
 		questionCount: 10,
 		passingScore: 70,
-		state: 'pending',
+		status: QUIZ_STATUS.pending,
 	},
 	{
 		id: 2,
@@ -24,7 +31,7 @@ const quizzes = [
 		},
 		questionCount: 15,
 		passingScore: 80,
-		state: 'collecting responses',
+		status: QUIZ_STATUS.active,
 	},
 	{
 		id: 3,
@@ -37,7 +44,7 @@ const quizzes = [
 		},
 		questionCount: 20,
 		passingScore: 90,
-		state: 'paused',
+		status: QUIZ_STATUS.paused,
 	},
 	{
 		id: 4,
@@ -50,7 +57,7 @@ const quizzes = [
 		},
 		questionCount: 25,
 		passingScore: 95,
-		state: 'completed',
+		status: QUIZ_STATUS.completed,
 	},
 	{
 		id: 5,
@@ -63,7 +70,7 @@ const quizzes = [
 		},
 		questionCount: 30,
 		passingScore: 100,
-		state: 'pending',
+		status: QUIZ_STATUS.pending,
 	},
 ]
 export default quizzes
