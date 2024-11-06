@@ -4,15 +4,21 @@ import { Icon } from '#app/components/ui/icon.js'
 export const Wrapper = ({
 	children,
 	labelText,
+	icon,
 }: {
 	children: React.ReactNode
 	labelText?: string
+	icon?: Parameters<typeof Icon>[0]['name']
 }) => {
 	return (
 		<div className="relative flex justify-center rounded-lg border border-gray-200 bg-white p-4 pt-8 shadow-md dark:bg-card">
 			<WrapperHandle />
-			{labelText && <WrapperLabel>{labelText}</WrapperLabel>}
-			{children}
+			{labelText && (
+				<WrapperLabel>
+					<Icon name={icon ?? 'calendar'}>{labelText}</Icon>
+				</WrapperLabel>
+			)}
+			<div className="flex w-2/3 flex-col gap-2">{children}</div>
 		</div>
 	)
 }
