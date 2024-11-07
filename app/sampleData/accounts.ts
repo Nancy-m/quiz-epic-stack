@@ -1,0 +1,90 @@
+export const ACCOUNT_STATUS = {
+	pending: '正常',
+	active: '无效',
+	paused: 'paused',
+	completed: 'completed',
+} as const
+
+const accounts = [
+	{
+		id: 1,
+		uid: 'c4ca4238a0b923820dcc509a6f75849b',
+		account: '账号1',
+		name: '管理员',
+		mobile: '13800138000',
+		email: 'admin@example.com',
+		accountType: '普通员工',
+		role: '运营人员',
+		operator: '张三',
+		availability: {
+			start: '2023-01-01',
+			end: '2023-01-31',
+		},
+		status: ACCOUNT_STATUS.pending,
+	},
+	{
+		id: 2,
+		uid: 'c81e728d9d4c2f636f067f89cc14862c',
+		account: '账号2',
+		name: '张三',
+		mobile: '13800138001',
+		email: 'zhangsan@example.com',
+		accountType: '管理员',
+		role: '销售人员',
+		operator: '李四',
+		availability: {
+			start: '2023-01-01',
+			end: '2023-01-31',
+		},
+		status: ACCOUNT_STATUS.active,
+	},
+	{
+		id: 3,
+		uid: 'eccbc87e4b5ce2fe28308fd9f2a7baf3',
+		account: '账号3',
+		name: '李四',
+		mobile: '13800138002',
+		email: 'lisi@example.com',
+		accountType: '普通员工',
+		role: '运营人员',
+		operator: '王五',
+		availability: {
+			start: '2023-01-01',
+			end: '2023-01-31',
+		},
+		status: ACCOUNT_STATUS.pending,
+	},
+	{
+		id: 4,
+		uid: 'a87ff679a2f3e71d9181a67b7542122c',
+		account: '账号4',
+		name: '王五',
+		mobile: '13800138003',
+		email: 'wangwu@example.com',
+		accountType: '普通员工',
+		role: '销售人员',
+		operator: '赵六',
+		availability: {
+			start: '2023-01-01',
+			end: '2023-01-31',
+		},
+		status: ACCOUNT_STATUS.pending,
+	},
+	{
+		id: 5,
+		uid: 'e4da3b7fbbce2345d7772b0674a318d5',
+		account: '账号5',
+		name: '赵六',
+		mobile: '13800138004',
+		email: 'zhaoliu@example.com',
+		accountType: '普通员工',
+		role: '运营人员',
+		operator: '张三',
+		availability: {
+			start: '2023-01-01',
+			end: '2023-01-31',
+		},
+		status:  ACCOUNT_STATUS.active,
+	}
+]
+export default accounts
