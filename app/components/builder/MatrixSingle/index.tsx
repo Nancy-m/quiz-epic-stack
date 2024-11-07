@@ -3,15 +3,15 @@ import { Icon } from '#app/components/ui/icon.js'
 import { Input } from '#app/components/ui/input.js'
 import { RadioGroup, RadioGroupItem } from '#app/components/ui/radio-group.js'
 import { cn } from '#app/utils/misc'
-import { PromptRow } from '../Common/PromptRow'
 import { BuilderItemSeparator } from '../Common/BuilderItemSeparator'
+import { PromptRow } from '../Common/PromptRow'
 import { Wrapper } from '../Common/Wrapper'
 
 const MATRIX_GAP = 'gap-2'
 
 export const MatrixSingle = () => {
 	return (
-		<Wrapper labelText="Matrix Single">
+		<Wrapper labelText="Matrix Single" icon="layout-grid">
 			<PromptRow />
 			<BuilderItemSeparator />
 			<MatrixQuadrant />

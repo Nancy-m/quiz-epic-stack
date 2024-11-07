@@ -6,7 +6,7 @@ import { Wrapper } from '../Common/Wrapper'
 
 export const FillInTheBlank = () => {
 	return (
-		<Wrapper labelText="Fill In The Blank">
+		<Wrapper labelText="Fill In The Blank" icon="pencil-line">
 			<PromptRow />
 			<BuilderItemSeparator />
 			<Input placeholder="Correct Answer" className="col-start-2" />

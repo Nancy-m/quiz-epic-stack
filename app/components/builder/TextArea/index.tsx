@@ -1,11 +1,11 @@
 import { Textarea } from '#app/components/ui/textarea.js'
-import { PromptRow } from '../Common/PromptRow'
 import { BuilderItemSeparator } from '../Common/BuilderItemSeparator'
+import { PromptRow } from '../Common/PromptRow'
 import { Wrapper } from '../Common/Wrapper'
 
 export const TextAreaQuery = () => {
 	return (
-		<Wrapper labelText="Fill In The Blank">
+		<Wrapper labelText="Text Area" icon="notebook-pen">
 			<PromptRow />
 			<BuilderItemSeparator />
 			<Textarea placeholder="Correct Answer" className="col-start-2" />
