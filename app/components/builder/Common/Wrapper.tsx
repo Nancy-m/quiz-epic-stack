@@ -18,7 +18,7 @@ export const Wrapper = ({
 					<Icon name={icon ?? 'calendar'}>{labelText}</Icon>
 				</WrapperLabel>
 			)}
-			<div className="flex w-2/3 flex-col gap-2">{children}</div>
+			<div className="grid grid-cols-[auto_400px_auto] gap-2">{children}</div>
 		</div>
 	)
 }

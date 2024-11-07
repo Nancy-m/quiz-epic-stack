@@ -1,11 +1,12 @@
 import { $path } from 'remix-routes'
 import { FillInTheBlank } from '#app/components/builder/FillInTheBlank/index.js'
+import { MatrixSingle } from '#app/components/builder/MatrixSingle/index.js'
 import { MultiChoice } from '#app/components/builder/MultiChoice/index.js'
 import { SelectBox } from '#app/components/builder/SelectBox/index.js'
 import { SingleChoice } from '#app/components/builder/SingleChoice/index.js'
+import { TextAreaQuery } from '#app/components/builder/TextArea/index.js'
 import { Heading } from '#app/components/routes/dashboard/Common/Heading/index.js'
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
-import { Button } from '#app/components/ui/button.js'
 
 export const handle: BreadcrumbHandle = {
 	breadcrumb: {
@@ -27,6 +28,8 @@ export default function Builder() {
 					<MultiChoice />
 					<SelectBox />
 					<FillInTheBlank />
+					<TextAreaQuery />
+					<MatrixSingle />
 				</div>
 			</div>
 		</>

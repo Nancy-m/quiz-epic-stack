@@ -18,8 +18,9 @@ export const OptionRow = ({
 	value: string
 }) => {
 	return (
-		<div className="flex flex-row items-stretch justify-between gap-2">
+		<>
 			<Icon name="grip-vertical" className="w-6" />
+
 			<div className="relative w-full">
 				<div className="absolute left-2 top-1/2 flex -translate-y-1/2 justify-center">
 					{type === SELECT_TYPES.checkbox && <Checkbox />}
@@ -28,6 +29,7 @@ export const OptionRow = ({
 				<Input placeholder="Option Text" className="pl-8" />
 				<ImageAttachIcon />
 			</div>
+
 			<div className="flex flex-row">
 				<Button variant="ghost">
 					<Icon name="circle-plus" />
@@ -36,6 +38,6 @@ export const OptionRow = ({
 					<Icon name="circle-minus" />
 				</Button>
 			</div>
-		</div>
+		</>
 	)
 }

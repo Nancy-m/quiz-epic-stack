@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { RadioGroup } from '#app/components/ui/radio-group.js'
-import { Separator } from '#app/components/ui/separator.js'
 import { ActionRow } from '../Common/ActionRow'
+import { BuilderItemSeparator } from '../Common/BuilderItemSeparator'
 import { OptionRow } from '../Common/OptionRow'
 import { PromptRow } from '../Common/PromptRow'
 import { Wrapper } from '../Common/Wrapper'
@@ -28,10 +28,10 @@ export function SingleChoice() {
 	return (
 		<Wrapper labelText="Single Select" icon="list-todo">
 			<PromptRow />
-			<Separator className="my-2" />
-			<RadioGroup>{optionsMap}</RadioGroup>
-			<Separator className="my-2" />
-			<ActionRow />
+			<BuilderItemSeparator />
+			<RadioGroup className="contents">{optionsMap}</RadioGroup>
+			<BuilderItemSeparator />
+			<ActionRow className="col-span-3" />
 		</Wrapper>
 	)
 }

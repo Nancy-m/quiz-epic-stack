@@ -121,6 +121,8 @@
 	}
 	body {
 		/* @apply bg-background text-foreground; */
-		@apply bg-background text-foreground;
+		/* 100vw and overflow hidden are used becuase select and popover components cause
+		a layout shift due to disabling the scrollbar */
+		@apply w-[100vw] overflow-hidden bg-background text-foreground;
 	}
 }
