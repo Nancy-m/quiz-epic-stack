@@ -39,7 +39,8 @@
 		--destructive: 0 70% 50%;
 		--destructive-foreground: 210 40% 98%;
 
-		--ring: 215 20.2% 65.1%;
+		/* --ring: 215 20.2% 65.1%; */
+		--ring: 166 93% 38%;
 
 		--radius: 0.5rem;
 
@@ -63,7 +64,7 @@
 	.dark {
 		--background: 222.2 84% 4.9%;
 		--foreground: 210 40% 98%;
-
+		--tw-ring-color: rgb(105, 167, 24);
 		/* prefixed with foreground because it should look good on the background */
 		--foreground-destructive: -4 84% 60%;
 
@@ -120,6 +121,8 @@
 	}
 	body {
 		/* @apply bg-background text-foreground; */
-		@apply bg-background text-foreground;
+		/* 100vw and overflow hidden are used becuase select and popover components cause
+		a layout shift due to disabling the scrollbar */
+		@apply w-[100vw] overflow-hidden bg-background text-foreground;
 	}
 }
