@@ -105,8 +105,14 @@ export const extendedTheme = {
 			'0%,70%,100%': { opacity: '1' },
 			'20%,50%': { opacity: '0' },
 		},
+		flash: {
+			'0%': { borderColor: 'transparent' },
+			'30%': { borderColor: 'red' },
+			'100%': { borderColor: 'transparent' },
+		},
 	},
 	animation: {
 		'caret-blink': 'caret-blink 1.25s ease-out infinite',
+		flash: 'flash 1s forwards 2',
 	},
 } satisfies Config['theme']

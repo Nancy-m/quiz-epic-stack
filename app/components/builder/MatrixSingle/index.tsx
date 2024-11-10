@@ -2,6 +2,7 @@ import { useId } from 'react'
 import { Icon } from '#app/components/ui/icon.js'
 import { Input } from '#app/components/ui/input.js'
 import { RadioGroup, RadioGroupItem } from '#app/components/ui/radio-group.js'
+import { type BuilderItemComponent } from '#app/types/builder.ts'
 import { cn } from '#app/utils/misc'
 import { BuilderItemSeparator } from '../Common/BuilderItemSeparator'
 import { PromptRow } from '../Common/PromptRow'
@@ -9,9 +10,9 @@ import { Wrapper } from '../Common/Wrapper'
 
 const MATRIX_GAP = 'gap-2'
 
-export const MatrixSingle = () => {
+export const MatrixSingle: BuilderItemComponent = ({ WrapperProps }) => {
 	return (
-		<Wrapper labelText="Matrix Single" icon="layout-grid">
+		<Wrapper labelText="Matrix Single" icon="layout-grid" {...WrapperProps}>
 			<PromptRow />
 			<BuilderItemSeparator />
 			<MatrixQuadrant />

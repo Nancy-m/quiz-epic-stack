@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { RadioGroup } from '#app/components/ui/radio-group.js'
+import { type BuilderItemComponent } from '#app/types/builder'
 import { ActionRow } from '../Common/ActionRow'
 import { BuilderItemSeparator } from '../Common/BuilderItemSeparator'
 import { OptionRow } from '../Common/OptionRow'
@@ -11,8 +12,8 @@ type SelectOption = {
 	correct: boolean
 	order: number
 }
-export function SingleChoice() {
-	const [options, setOptions] = useState<SelectOption[]>([
+export const SingleChoice: BuilderItemComponent = ({ WrapperProps }) => {
+	const [options] = useState<SelectOption[]>([
 		{ text: '', correct: false, order: 0 },
 		{ text: '', correct: false, order: 1 },
 		{ text: '', correct: false, order: 2 },
@@ -26,7 +27,7 @@ export function SingleChoice() {
 	)
 
 	return (
-		<Wrapper labelText="Single Select" icon="list-todo">
+		<Wrapper labelText="Single Select" icon="list-todo" {...WrapperProps}>
 			<PromptRow />
 			<BuilderItemSeparator />
 			<RadioGroup className="contents">{optionsMap}</RadioGroup>
