@@ -2,17 +2,23 @@ import { type ActionFunctionArgs } from '@remix-run/node'
 import { Form } from '@remix-run/react'
 import { useState } from 'react'
 import { $path } from 'remix-routes'
-import {
-	Dialog,
-	DialogTrigger,
-	DialogContent,
-	DialogClose,
-} from '#app/components/dialog/index'
 import { Heading } from '#app/components/routes/dashboard/Common/Heading/index.js'
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
 import { Badge } from '#app/components/ui/badge.js'
 import { Button } from '#app/components/ui/button.js'
 import { Checkbox } from '#app/components/ui/checkbox.js'
+import {
+	Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogClose,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from '#app/components/ui/dialog.js'
 import { Icon } from '#app/components/ui/icon.js'
 import { Input } from '#app/components/ui/input.js'
 import {
@@ -188,34 +194,36 @@ export default function Accounts() {
 								</TableCell>
 								<TableCell className="flex justify-center text-nowrap">
 									<div className="cursor-pointer text-primary">编辑</div>
-									<div
-										className="ml-2 cursor-pointer text-primary"
-										onClick={() => setIsDialogOpen(true)}
-									>
-										重置密码
-									</div>
-									<Dialog
+									<Dialog 
 										open={isDialogOpen}
-										onClose={() => setIsDialogOpen(false)}
+										onOpenChange={setIsDialogOpen}
 									>
-										<DialogTrigger>
+										<DialogTrigger asChild>
 											<button
-												className="btn btn-primary"
+												className="btn btn-primary ml-2 cursor-pointer text-primary"
 												onClick={() => setIsDialogOpen(true)}
 											>
-												Open Dialog
+												重置密码
 											</button>
 										</DialogTrigger>
 
 										<DialogContent>
-											<h2 className="text-xl">Dialog Title</h2>
-											<p>This is the content of the dialog.</p>
-											<DialogClose
-												onClick={() => setIsDialogOpen(false)}
-												className="btn btn-secondary mt-4"
-											>
-												Close
-											</DialogClose>
+											<h2 className="text-xl">重置密码</h2>
+											<p>确认重置账号xxx的密码？</p>
+											<div className="flex justify-end">
+												<DialogClose
+													onClick={() => setIsDialogOpen(false)}
+													className="btn btn-secondary mt-4"
+												>
+													取消
+												</DialogClose>
+												<DialogClose
+													onClick={() => setIsDialogOpen(false)}
+													className="btn btn-secondary mt-4 ml-2"
+												>
+													确认
+												</DialogClose>
+											</div>
 										</DialogContent>
 									</Dialog>
 								</TableCell>
