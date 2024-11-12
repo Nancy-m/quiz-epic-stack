@@ -13,7 +13,7 @@ const accounts = [
 		name: '管理员',
 		mobile: '13800138000',
 		email: 'admin@example.com',
-		accountType: '普通员工',
+		accountType: 'TypeA',
 		role: '运营人员',
 		operator: '张三',
 		availability: {
@@ -29,7 +29,7 @@ const accounts = [
 		name: '张三',
 		mobile: '13800138001',
 		email: 'zhangsan@example.com',
-		accountType: '管理员',
+		accountType: 'TypeB',
 		role: '销售人员',
 		operator: '李四',
 		availability: {
@@ -45,7 +45,7 @@ const accounts = [
 		name: '李四',
 		mobile: '13800138002',
 		email: 'lisi@example.com',
-		accountType: '普通员工',
+		accountType: 'TypeA',
 		role: '运营人员',
 		operator: '王五',
 		availability: {
@@ -61,7 +61,7 @@ const accounts = [
 		name: '王五',
 		mobile: '13800138003',
 		email: 'wangwu@example.com',
-		accountType: '普通员工',
+		accountType: 'TypeB',
 		role: '销售人员',
 		operator: '赵六',
 		availability: {
@@ -77,7 +77,7 @@ const accounts = [
 		name: '赵六',
 		mobile: '13800138004',
 		email: 'zhaoliu@example.com',
-		accountType: '普通员工',
+		accountType: 'TypeB',
 		role: '运营人员',
 		operator: '张三',
 		availability: {

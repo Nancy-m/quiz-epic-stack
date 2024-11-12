@@ -1,6 +1,6 @@
 import { type ActionFunctionArgs } from '@remix-run/node'
 import { Form } from '@remix-run/react'
-import { useState } from 'react'
+import { SetStateAction, useState } from 'react'
 import { $path } from 'remix-routes'
 import { Heading } from '#app/components/routes/dashboard/Common/Heading/index.js'
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
@@ -9,18 +9,28 @@ import { Button } from '#app/components/ui/button.js'
 import { Checkbox } from '#app/components/ui/checkbox.js'
 import {
 	Dialog,
-  DialogPortal,
-  DialogOverlay,
-  DialogClose,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
+	DialogPortal,
+	DialogOverlay,
+	DialogClose,
+	DialogTrigger,
+	DialogContent,
+	DialogHeader,
+	DialogFooter,
+	DialogTitle,
+	DialogDescription,
 } from '#app/components/ui/dialog.js'
 import { Icon } from '#app/components/ui/icon.js'
 import { Input } from '#app/components/ui/input.js'
+import { Label } from '#app/components/ui/label.tsx'
+import {
+	Pagination,
+	PaginationContent,
+	PaginationEllipsis,
+	PaginationItem,
+	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
+} from '#app/components/ui/pagination'
 import {
 	Select,
 	SelectItem,
@@ -39,6 +49,26 @@ import {
 import accounts, { ACCOUNT_STATUS } from '#app/sampleData/accounts'
 import { cn } from '#app/utils/misc.js'
 
+type AccountType = 'TypeA' | 'TypeB'
+interface AccountTypeConfig {
+	color: string
+	label: string
+}
+type AccountTypeConfigMap = {
+	[key in AccountType]: AccountTypeConfig
+}
+
+const accountTypeConfig: AccountTypeConfigMap = {
+	TypeA: {
+		color: 'bg-blue-400/5 text-blue-400 border-blue-400 hover:bg-blue-400/10',
+		label: '普通员工',
+	},
+	TypeB: {
+		color:
+			'bg-green-400/5 text-green-400 border-green-400 hover:bg-green-400/10',
+		label: '管理员',
+	},
+}
 export const handle: BreadcrumbHandle = {
 	breadcrumb: {
 		title: 'Accounts',
@@ -46,7 +76,7 @@ export const handle: BreadcrumbHandle = {
 	},
 }
 
-const quizStatuses = [
+const accountStatuses = [
 	{
 		label: ACCOUNT_STATUS.pending,
 		color: 'bg-blue-400/5 text-blue-400 border-blue-400 hover:bg-blue-400/10',
@@ -68,7 +98,11 @@ export default function Accounts() {
 	const [selectedQuizzes, setSelectedQuizzes] = useState<boolean[]>(
 		new Array(accounts.length).fill(false),
 	)
-	const [isDialogOpen, setIsDialogOpen] = useState(false)
+	const [selectedAccount, setSelectedAccount] = useState<{ id: number; uid: string; account: string; name: string; mobile: string; email: string; accountType: string; role: string; operator: string; availability: { start: string; end: string }; status: "正常" } | { id: number; uid: string; account: string; name: string; mobile: string; email: string; accountType: string; role: string; operator: string; availability: { start: string; end: string }; status: "无效" } | null>(null)
+
+	const handleEditClick = (account: { id: number; uid: string; account: string; name: string; mobile: string; email: string; accountType: string; role: string; operator: string; availability: { start: string; end: string }; status: "正常" } | { id: number; uid: string; account: string; name: string; mobile: string; email: string; accountType: string; role: string; operator: string; availability: { start: string; end: string }; status: "无效" }) => {
+		setSelectedAccount(account)
+	}
 	return (
 		<div>
 			<div className="flex items-center justify-between">
@@ -168,7 +202,17 @@ export default function Accounts() {
 								<TableCell className="font-medium">{account.name}</TableCell>
 								<TableCell>{account.mobile}</TableCell>
 								<TableCell>{account.email}</TableCell>
-								<TableCell>{account.accountType}</TableCell>
+								<TableCell className="text-center">
+									<Badge
+										className={
+											accountTypeConfig[account.accountType as AccountType]
+												?.color || 'text-gray-500'
+										}
+									>
+										{accountTypeConfig[account.accountType as AccountType]
+											?.label || account.accountType}
+									</Badge>
+								</TableCell>
 								<TableCell>{account.role}</TableCell>
 								<TableCell>{account.operator}</TableCell>
 								<TableCell>
@@ -181,7 +225,7 @@ export default function Accounts() {
 								</TableCell>
 								<TableCell>
 									{(() => {
-										const state = quizStatuses.find(
+										const state = accountStatuses.find(
 											(status) => status.label === account.status,
 										)
 										if (!state) return null
@@ -193,37 +237,93 @@ export default function Accounts() {
 									})()}
 								</TableCell>
 								<TableCell className="flex justify-center text-nowrap">
-									<div className="cursor-pointer text-primary">编辑</div>
-									<Dialog 
-										open={isDialogOpen}
-										onOpenChange={setIsDialogOpen}
-									>
+									<Dialog>
 										<DialogTrigger asChild>
-											<button
-												className="btn btn-primary ml-2 cursor-pointer text-primary"
-												onClick={() => setIsDialogOpen(true)}
+											<Button
+												variant="ghost"
+												className="text-primary"
+												onClick={() => handleEditClick(account)}
 											>
-												重置密码
-											</button>
+												编辑
+											</Button>
 										</DialogTrigger>
-
-										<DialogContent>
-											<h2 className="text-xl">重置密码</h2>
-											<p>确认重置账号xxx的密码？</p>
-											<div className="flex justify-end">
-												<DialogClose
-													onClick={() => setIsDialogOpen(false)}
-													className="btn btn-secondary mt-4"
-												>
-													取消
+										<DialogContent className="sm:max-w-[425px]">
+											<DialogHeader>
+												<DialogTitle>编辑账号</DialogTitle>
+											</DialogHeader>
+											{selectedAccount && (
+												<div className="grid gap-4 py-4">
+													<div className="grid grid-cols-4 items-center gap-4">
+														<Label htmlFor="name" className="text-right">
+															账号
+														</Label>
+														<Input
+															id="name"
+															defaultValue={selectedAccount.account}
+															className="col-span-3"
+														/>
+													</div>
+													<div className="grid grid-cols-4 items-center gap-4">
+														<Label htmlFor="username" className="text-right">
+															姓名
+														</Label>
+														<Input
+															id="username"
+															defaultValue={selectedAccount.name}
+															className="col-span-3"
+														/>
+													</div>
+													<div className="grid grid-cols-4 items-center gap-4">
+														<Label htmlFor="mobile" className="text-right">
+															电话
+														</Label>
+														<Input
+															id="username"
+															defaultValue={selectedAccount.mobile}
+															className="col-span-3"
+														/>
+													</div>
+												</div>
+											)}
+											<DialogFooter>
+												<DialogClose asChild>
+													<Button type="submit" size="sm" variant="outline">
+														取消
+													</Button>
 												</DialogClose>
-												<DialogClose
-													onClick={() => setIsDialogOpen(false)}
-													className="btn btn-secondary mt-4 ml-2"
-												>
-													确认
+												<DialogClose asChild>
+													<Button type="submit" size="sm" variant="default">
+														确认
+													</Button>
 												</DialogClose>
-											</div>
+											</DialogFooter>
+										</DialogContent>
+									</Dialog>
+									<Dialog>
+										<DialogTrigger asChild>
+											<Button variant="ghost" className="text-primary">
+												重置密码
+											</Button>
+										</DialogTrigger>
+										<DialogContent className="sm:max-w-[425px]">
+											<DialogHeader>
+												<DialogTitle>重置密码</DialogTitle>
+												<DialogDescription>
+													确认重置账号xxx的密码？
+												</DialogDescription>
+											</DialogHeader>
+											<DialogFooter>
+												<DialogClose asChild>
+													<Button type="submit" size="sm" variant="outline">
+														取消
+													</Button>
+												</DialogClose>
+												<DialogClose asChild>
+													<Button type="submit" size="sm" variant="default">
+														确认
+													</Button>
+												</DialogClose>
+											</DialogFooter>
 										</DialogContent>
 									</Dialog>
 								</TableCell>
@@ -231,6 +331,25 @@ export default function Accounts() {
 						))}
 					</TableBody>
 				</Table>
+				<Pagination className="flex justify-end">
+					<PaginationContent>
+						<PaginationItem>
+							<PaginationPrevious href="#" />
+						</PaginationItem>
+						<PaginationItem>
+							<PaginationLink href="#">1</PaginationLink>
+						</PaginationItem>
+						<PaginationItem>
+							<PaginationLink href="#">2</PaginationLink>
+						</PaginationItem>
+						<PaginationItem>
+							<PaginationEllipsis />
+						</PaginationItem>
+						<PaginationItem>
+							<PaginationNext href="#" />
+						</PaginationItem>
+					</PaginationContent>
+				</Pagination>
 			</Form>
 		</div>
 	)
