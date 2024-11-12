@@ -1,13 +1,14 @@
 import { RadioGroup } from '#app/components/ui/radio-group.js'
+import { type BuilderItemComponent } from '#app/types/builder'
 import { ActionRow } from '../Common/ActionRow'
 import { BuilderItemSeparator } from '../Common/BuilderItemSeparator'
 import { OptionRow } from '../Common/OptionRow'
 import { PromptRow } from '../Common/PromptRow'
 import { Wrapper } from '../Common/Wrapper'
 
-export const SelectBox = () => {
+export const SelectBox: BuilderItemComponent = ({ WrapperProps }) => {
 	return (
-		<Wrapper labelText="Select Box" icon="panel-top-open">
+		<Wrapper labelText="Select Box" icon="panel-top-open" {...WrapperProps}>
 			<PromptRow />
 			<BuilderItemSeparator />
 			<RadioGroup className="contents">
