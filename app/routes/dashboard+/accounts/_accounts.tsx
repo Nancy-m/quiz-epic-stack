@@ -48,11 +48,25 @@ import {
 } from '#app/components/ui/table.js'
 import accounts, { ACCOUNT_STATUS } from '#app/sampleData/accounts'
 import { cn } from '#app/utils/misc.js'
+import { toast } from 'sonner'
 
 type AccountType = 'TypeA' | 'TypeB'
 interface AccountTypeConfig {
 	color: string
 	label: string
+}
+interface Account {
+  id: number,
+	uid: string,
+	account: string,
+	name: string,
+	mobile: string,
+	email: string,
+	accountType: string,
+	role: string,
+	operator: string,
+	availability: object,
+	status: string,
 }
 type AccountTypeConfigMap = {
 	[key in AccountType]: AccountTypeConfig
@@ -98,17 +112,69 @@ export default function Accounts() {
 	const [selectedQuizzes, setSelectedQuizzes] = useState<boolean[]>(
 		new Array(accounts.length).fill(false),
 	)
-	const [selectedAccount, setSelectedAccount] = useState<{ id: number; uid: string; account: string; name: string; mobile: string; email: string; accountType: string; role: string; operator: string; availability: { start: string; end: string }; status: "正常" } | { id: number; uid: string; account: string; name: string; mobile: string; email: string; accountType: string; role: string; operator: string; availability: { start: string; end: string }; status: "无效" } | null>(null)
+	const [selectedAccount, setSelectedAccount] = useState<Account | null>(null)
 
-	const handleEditClick = (account: { id: number; uid: string; account: string; name: string; mobile: string; email: string; accountType: string; role: string; operator: string; availability: { start: string; end: string }; status: "正常" } | { id: number; uid: string; account: string; name: string; mobile: string; email: string; accountType: string; role: string; operator: string; availability: { start: string; end: string }; status: "无效" }) => {
+	const handleEditClick = (account: any) => {
 		setSelectedAccount(account)
 	}
+	const handleResetPwdClick = (account: any) => {
+		setSelectedAccount(account)
+	}
+	const handleDelete = async (account: any) => {
+		
+		if (account.accountType === 'TypeA') {
+			toast.error('管理员账号不可删除')
+			return
+		}
+
+		if (account.status === 'active') {
+			toast.error('账号[283898475]目前是有效状态，暂时无法从组织内删除')
+			return
+		}
+		setSelectedAccount(account)
+	}
+	const confirmDelete = async () => {
+		
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      console.log("账号删除成功");
+    } catch (error) {
+      toast.error("删除失败")
+    }
+  }
+
 	return (
 		<div>
 			<div className="flex items-center justify-between">
 				<Heading className="flex-grow">Accounts</Heading>
 				<div className="flex items-center gap-2">
-					<Button className="flex-shrink-0">删除</Button>
+					<Dialog>
+						<DialogTrigger asChild>
+							<Button variant="outline" className="flex-shrink-0" onClick={handleDelete}>
+								删除
+							</Button>
+						</DialogTrigger>
+						<DialogContent>
+							<DialogHeader>
+								<DialogTitle>删除账号</DialogTitle>
+								<DialogDescription>
+									确认删除账号 {selectedAccount?.name} 吗？此操作不可撤销。
+								</DialogDescription>
+							</DialogHeader>
+							<DialogFooter>
+								<DialogClose asChild>
+									<Button size="sm" variant="outline">
+										取消
+									</Button>
+								</DialogClose>
+								<DialogClose asChild>
+									<Button size="sm" variant="destructive" onClick={confirmDelete}>
+										确认删除
+									</Button>
+								</DialogClose>
+							</DialogFooter>
+						</DialogContent>
+					</Dialog>
 					<Button className="flex-shrink-0">
 						<Icon name="plus" scale={2}>
 							创建
@@ -259,7 +325,7 @@ export default function Accounts() {
 														</Label>
 														<Input
 															id="name"
-															defaultValue={selectedAccount.account}
+															defaultValue={selectedAccount?.account}
 															className="col-span-3"
 														/>
 													</div>
@@ -301,16 +367,22 @@ export default function Accounts() {
 									</Dialog>
 									<Dialog>
 										<DialogTrigger asChild>
-											<Button variant="ghost" className="text-primary">
+											<Button
+												variant="ghost"
+												className="text-primary"
+												onClick={() => handleResetPwdClick(account)}
+											>
 												重置密码
 											</Button>
 										</DialogTrigger>
 										<DialogContent className="sm:max-w-[425px]">
 											<DialogHeader>
 												<DialogTitle>重置密码</DialogTitle>
-												<DialogDescription>
-													确认重置账号xxx的密码？
-												</DialogDescription>
+												{selectedAccount && (
+													<DialogDescription>
+														确认重置账号{selectedAccount.account}的密码？
+													</DialogDescription>
+												)}
 											</DialogHeader>
 											<DialogFooter>
 												<DialogClose asChild>

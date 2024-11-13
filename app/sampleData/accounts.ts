@@ -9,7 +9,7 @@ const accounts = [
 	{
 		id: 1,
 		uid: 'c4ca4238a0b923820dcc509a6f75849b',
-		account: '账号1',
+		account: '第1号',
 		name: '管理员',
 		mobile: '13800138000',
 		email: 'admin@example.com',
@@ -25,7 +25,7 @@ const accounts = [
 	{
 		id: 2,
 		uid: 'c81e728d9d4c2f636f067f89cc14862c',
-		account: '账号2',
+		account: '第2号',
 		name: '张三',
 		mobile: '13800138001',
 		email: 'zhangsan@example.com',
@@ -41,7 +41,7 @@ const accounts = [
 	{
 		id: 3,
 		uid: 'eccbc87e4b5ce2fe28308fd9f2a7baf3',
-		account: '账号3',
+		account: '第3号',
 		name: '李四',
 		mobile: '13800138002',
 		email: 'lisi@example.com',
@@ -57,7 +57,7 @@ const accounts = [
 	{
 		id: 4,
 		uid: 'a87ff679a2f3e71d9181a67b7542122c',
-		account: '账号4',
+		account: '第4号',
 		name: '王五',
 		mobile: '13800138003',
 		email: 'wangwu@example.com',
@@ -73,7 +73,7 @@ const accounts = [
 	{
 		id: 5,
 		uid: 'e4da3b7fbbce2345d7772b0674a318d5',
-		account: '账号5',
+		account: '第5号',
 		name: '赵六',
 		mobile: '13800138004',
 		email: 'zhaoliu@example.com',
