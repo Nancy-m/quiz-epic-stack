@@ -1,7 +1,8 @@
 import { type ActionFunctionArgs } from '@remix-run/node'
 import { Form } from '@remix-run/react'
-import { SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { $path } from 'remix-routes'
+import { toast } from 'sonner'
 import { Heading } from '#app/components/routes/dashboard/Common/Heading/index.js'
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
 import { Badge } from '#app/components/ui/badge.js'
@@ -9,8 +10,6 @@ import { Button } from '#app/components/ui/button.js'
 import { Checkbox } from '#app/components/ui/checkbox.js'
 import {
 	Dialog,
-	DialogPortal,
-	DialogOverlay,
 	DialogClose,
 	DialogTrigger,
 	DialogContent,
@@ -48,25 +47,27 @@ import {
 } from '#app/components/ui/table.js'
 import accounts, { ACCOUNT_STATUS } from '#app/sampleData/accounts'
 import { cn } from '#app/utils/misc.js'
-import { toast } from 'sonner'
-
 type AccountType = 'TypeA' | 'TypeB'
 interface AccountTypeConfig {
 	color: string
 	label: string
 }
+interface Availability {
+	start: string
+	end: string
+}
 interface Account {
-  id: number,
-	uid: string,
-	account: string,
-	name: string,
-	mobile: string,
-	email: string,
-	accountType: string,
-	role: string,
-	operator: string,
-	availability: object,
-	status: string,
+	id: number
+	uid: string
+	account: string
+	name: string
+	mobile: string
+	email: string
+	accountType: AccountType
+	role: string
+	operator: string
+	availability: Availability
+	status: string
 }
 type AccountTypeConfigMap = {
 	[key in AccountType]: AccountTypeConfig
@@ -107,21 +108,19 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	console.log(formData)
 	return null
 }
-
 export default function Accounts() {
 	const [selectedQuizzes, setSelectedQuizzes] = useState<boolean[]>(
 		new Array(accounts.length).fill(false),
 	)
 	const [selectedAccount, setSelectedAccount] = useState<Account | null>(null)
 
-	const handleEditClick = (account: any) => {
+	const handleEditClick = (account: Account) => {
 		setSelectedAccount(account)
 	}
-	const handleResetPwdClick = (account: any) => {
+	const handleResetPwdClick = (account: Account) => {
 		setSelectedAccount(account)
 	}
-	const handleDelete = async (account: any) => {
-		
+	const handleDelete = async (account: Account) => {
 		if (account.accountType === 'TypeA') {
 			toast.error('管理员账号不可删除')
 			return
@@ -134,14 +133,8 @@ export default function Accounts() {
 		setSelectedAccount(account)
 	}
 	const confirmDelete = async () => {
-		
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      console.log("账号删除成功");
-    } catch (error) {
-      toast.error("删除失败")
-    }
-  }
+		toast.success('删除成功')
+	}
 
 	return (
 		<div>
@@ -150,7 +143,11 @@ export default function Accounts() {
 				<div className="flex items-center gap-2">
 					<Dialog>
 						<DialogTrigger asChild>
-							<Button variant="outline" className="flex-shrink-0" onClick={handleDelete}>
+							<Button
+								variant="outline"
+								className="flex-shrink-0"
+								onClick={() => selectedAccount && handleDelete(selectedAccount)}
+							>
 								删除
 							</Button>
 						</DialogTrigger>
@@ -168,7 +165,11 @@ export default function Accounts() {
 									</Button>
 								</DialogClose>
 								<DialogClose asChild>
-									<Button size="sm" variant="destructive" onClick={confirmDelete}>
+									<Button
+										size="sm"
+										variant="destructive"
+										onClick={confirmDelete}
+									>
 										确认删除
 									</Button>
 								</DialogClose>
@@ -308,7 +309,7 @@ export default function Accounts() {
 											<Button
 												variant="ghost"
 												className="text-primary"
-												onClick={() => handleEditClick(account)}
+												onClick={() => handleEditClick({ ...account, accountType: account.accountType as AccountType })}
 											>
 												编辑
 											</Button>
@@ -370,7 +371,7 @@ export default function Accounts() {
 											<Button
 												variant="ghost"
 												className="text-primary"
-												onClick={() => handleResetPwdClick(account)}
+												onClick={() => handleResetPwdClick({ ...account, accountType: account.accountType as AccountType })}
 											>
 												重置密码
 											</Button>

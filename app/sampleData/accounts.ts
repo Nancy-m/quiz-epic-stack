@@ -20,7 +20,7 @@ const accounts = [
 			start: '2023-01-01',
 			end: '2023-01-31',
 		},
-		status: ACCOUNT_STATUS.pending,
+		status: '正常',
 	},
 	{
 		id: 2,
