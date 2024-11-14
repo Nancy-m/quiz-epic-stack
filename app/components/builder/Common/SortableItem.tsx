@@ -1,5 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable'
-import { isTempId } from '#app/utils/builder-ids.js'
+import { isTempId } from '#app/utils/builder/builder-ids'
 
 interface SortableItemProps {
 	id: string

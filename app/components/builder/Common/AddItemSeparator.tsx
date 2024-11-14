@@ -1,5 +1,8 @@
 import { Icon } from '#app/components/ui/icon.js'
 
+/**
+ * @deprecated Add item separator is currently unused, but may be useful in the future.
+ */
 export const AddItemSeparator = () => {
 	return (
 		<div className="relative">

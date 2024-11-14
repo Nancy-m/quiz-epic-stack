@@ -1,6 +1,7 @@
 import { useLocation, useMatches } from '@remix-run/react'
 import { ChevronRight } from 'lucide-react'
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -12,6 +13,12 @@ import {
 
 export interface BreadcrumbHandle {
 	breadcrumb: {
+		/**
+		 * The i18n namespace to use for the title translation.
+		 * If no namespace is provided, the `this.title` will be used as-is,
+		 * i.e. "Page Name" will be "Page Name"
+		 */
+		namespace?: string
 		title: string
 		path: string
 	}
@@ -31,22 +38,29 @@ const useDashboardBreadcrumbs = () => {
 }
 
 const BreadcrumbObj = ({
+	namespace,
 	title,
 	path,
 	hasTrailingSlash,
 }: {
+	namespace?: string
 	title: string
 	path: string
 	hasTrailingSlash: boolean
 }) => {
 	const { pathname } = useLocation()
+	const { t } = useTranslation(namespace)
 	return (
 		<>
 			<BreadcrumbItem>
 				{path === pathname ? (
-					<BreadcrumbPage className="font-bold">{title}</BreadcrumbPage>
+					<BreadcrumbPage className="font-bold">
+						{namespace ? t(title) : title}
+					</BreadcrumbPage>
 				) : (
-					<BreadcrumbLink href={path}>{title}</BreadcrumbLink>
+					<BreadcrumbLink href={path}>
+						{namespace ? t(title) : title}
+					</BreadcrumbLink>
 				)}
 			</BreadcrumbItem>
 
@@ -67,6 +81,7 @@ export const DashboardBreadcrumbs = () => {
 			<BreadcrumbList>
 				{breadcrumbs.map((match, idx) => (
 					<BreadcrumbObj
+						namespace={match.namespace}
 						title={match.title}
 						path={match.path}
 						hasTrailingSlash={idx < breadcrumbs.length - 1}

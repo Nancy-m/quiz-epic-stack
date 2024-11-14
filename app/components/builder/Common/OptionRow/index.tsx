@@ -1,13 +1,19 @@
+import { useTranslation } from 'react-i18next'
 import { Button } from '#app/components/ui/button.js'
 import { Checkbox } from '#app/components/ui/checkbox.js'
 import { Icon } from '#app/components/ui/icon.js'
 import { Input } from '#app/components/ui/input.js'
 import { RadioGroupItem } from '#app/components/ui/radio-group.js'
-import { ImageAttachIcon } from './ImageAttachIcon'
+import { type I18nHandle } from '#app/modules/i18next/util.js'
+import { ImageAttachIcon } from '../ImageAttachIcon'
 
 enum SELECT_TYPES {
 	checkbox = 'checkbox',
 	radio = 'radio',
+}
+
+const handle: I18nHandle = {
+	i18n: ['OptionRow', ...ImageAttachIcon.handle.i18n],
 }
 
 export const OptionRow = ({
@@ -17,6 +23,7 @@ export const OptionRow = ({
 	type: `${SELECT_TYPES}`
 	value: string
 }) => {
+	const { t } = useTranslation(['OptionRow'])
 	return (
 		<>
 			<Icon name="grip-vertical" className="w-6" />
@@ -26,7 +33,7 @@ export const OptionRow = ({
 					{type === SELECT_TYPES.checkbox && <Checkbox />}
 					{type === SELECT_TYPES.radio && <RadioGroupItem value={value} />}
 				</div>
-				<Input placeholder="Option Text" className="pl-8" />
+				<Input placeholder={t('Option Text')} className="pl-8" />
 				<ImageAttachIcon />
 			</div>
 
@@ -41,3 +48,5 @@ export const OptionRow = ({
 		</>
 	)
 }
+
+OptionRow.handle = handle

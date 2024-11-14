@@ -1,9 +1,16 @@
+import { useTranslation } from 'react-i18next'
 import { Button } from '#app/components/ui/button.js'
 import { Icon } from '#app/components/ui/icon.js'
 import { Input } from '#app/components/ui/input.js'
-import { ImageAttachIcon } from './ImageAttachIcon'
+import { type I18nHandle } from '#app/modules/i18next/util.js'
+import { ImageAttachIcon } from '../ImageAttachIcon'
+
+const handle: I18nHandle = {
+	i18n: ['PromptRow', ...ImageAttachIcon.handle.i18n],
+}
 
 export const PromptRow = () => {
+	const { t } = useTranslation('PromptRow')
 	return (
 		<>
 			<div className="flex items-center">
@@ -13,7 +20,7 @@ export const PromptRow = () => {
 
 			<div className="relative w-full">
 				<ImageAttachIcon />
-				<Input placeholder="Question Text" />
+				<Input placeholder={t('question-text')} />
 			</div>
 
 			<div className="flex flex-row">
@@ -30,3 +37,5 @@ export const PromptRow = () => {
 		</>
 	)
 }
+
+PromptRow.handle = handle

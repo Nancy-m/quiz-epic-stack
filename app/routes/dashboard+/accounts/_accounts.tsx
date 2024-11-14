@@ -44,6 +44,7 @@ import {
 	TableHeader,
 	TableRow,
 } from '#app/components/ui/table.js'
+import { type I18nHandle } from '#app/modules/i18next/util'
 import accounts, { ACCOUNT_STATUS } from '#app/sampleData/accounts'
 import { cn } from '#app/utils/misc.js'
 type AccountType = 'TypeA' | 'TypeB'
@@ -83,11 +84,12 @@ const accountTypeConfig: AccountTypeConfigMap = {
 		label: '管理员',
 	},
 }
-export const handle: BreadcrumbHandle = {
+export const handle: BreadcrumbHandle & I18nHandle = {
 	breadcrumb: {
 		title: 'Accounts',
 		path: $path('/dashboard/accounts'),
 	},
+	i18n: ['accounts'],
 }
 
 const accountStatuses = [
