@@ -2,7 +2,6 @@ import { type ActionFunctionArgs } from '@remix-run/node'
 import { Form } from '@remix-run/react'
 import { useState } from 'react'
 import { $path } from 'remix-routes'
-import { toast } from 'sonner'
 import { Heading } from '#app/components/routes/dashboard/Common/Heading/index.js'
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
 import { Badge } from '#app/components/ui/badge.js'
@@ -109,10 +108,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	return null
 }
 export default function Accounts() {
-	const [selectedQuizzes, setSelectedQuizzes] = useState<boolean[]>(
-		new Array(accounts.length).fill(false),
-	)
 	const [selectedAccount, setSelectedAccount] = useState<Account | null>(null)
+	const [showConfirmDialog, setShowConfirmDialog] = useState<boolean>(false)
+	const [selectedAccountIds, setSelectedAccountIds] = useState<number[]>([])
+	const [accountNamesString, setAccountNamesString] = useState< string >('') // 新增状态
+	const [selectAll, setSelectAll] = useState<boolean>(false)
+
+	const handleSelectAllChange = (checked: boolean) => {
+		setSelectAll(checked)
+		setSelectedAccountIds(checked ? accounts.map((account) => account.id) : [])
+	}
 
 	const handleEditClick = (account: Account) => {
 		setSelectedAccount(account)
@@ -120,20 +125,35 @@ export default function Accounts() {
 	const handleResetPwdClick = (account: Account) => {
 		setSelectedAccount(account)
 	}
-	const handleDelete = async (account: Account) => {
-		if (account.accountType === 'TypeA') {
-			toast.error('管理员账号不可删除')
-			return
-		}
 
-		if (account.status === 'active') {
-			toast.error('账号[283898475]目前是有效状态，暂时无法从组织内删除')
-			return
+	const handleDeleteClick = () => {
+		if (selectedAccountIds.length === 0) {
+			console.log('请先选择要删除的账号')
+		} else {
+			// 获取所有选中的账号
+			const accountsToDelete = accounts.filter((account) =>
+				selectedAccountIds.includes(account.id),
+			)
+			// 获取选中的账号名称
+			const accountNames = accountsToDelete.map((account) => account.name)
+			const newAccountNamesString =
+				accountNames.length > 0 ? accountNames.join(', ') : ''
+			setAccountNamesString(newAccountNamesString)
+			// 设置选中的账号
+			const accountToSet: Account | null =
+				accountsToDelete.length > 0 ? (accountsToDelete[0] as Account) : null
+			setSelectedAccount(accountToSet)
+			setShowConfirmDialog(true) // 显示确认删除对话框
+			// 可以在这里显示提示的账号名称
+			console.log(`确认将账号 [${accountNamesString}] 从列表中删除`)
 		}
-		setSelectedAccount(account)
 	}
-	const confirmDelete = async () => {
-		toast.success('删除成功')
+
+	const confirmDelete = () => {
+		// 这里添加删除逻辑，比如调用 API 删除账号
+		console.log('删除账号', selectedAccountIds)
+		setSelectedAccountIds([]) // 清空选择的账号
+		setShowConfirmDialog(false) // 关闭对话框
 	}
 
 	return (
@@ -141,21 +161,19 @@ export default function Accounts() {
 			<div className="flex items-center justify-between">
 				<Heading className="flex-grow">Accounts</Heading>
 				<div className="flex items-center gap-2">
-					<Dialog>
-						<DialogTrigger asChild>
-							<Button
-								variant="outline"
-								className="flex-shrink-0"
-								onClick={() => selectedAccount && handleDelete(selectedAccount)}
-							>
-								删除
-							</Button>
-						</DialogTrigger>
+					<Button
+						variant="outline"
+						className="flex-shrink-0"
+						onClick={handleDeleteClick}
+					>
+						删除
+					</Button>
+					<Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
 						<DialogContent>
 							<DialogHeader>
 								<DialogTitle>删除账号</DialogTitle>
 								<DialogDescription>
-									确认删除账号 {selectedAccount?.name} 吗？此操作不可撤销。
+									确认将账号 [{accountNamesString}] 从列表中删除？
 								</DialogDescription>
 							</DialogHeader>
 							<DialogFooter>
@@ -225,14 +243,8 @@ export default function Accounts() {
 						<TableRow className="text-nowrap">
 							<TableHead className="flex items-center justify-center font-bold">
 								<Checkbox
-									defaultChecked={false}
-									onCheckedChange={(checked) =>
-										setSelectedQuizzes((selectedQuizzes) =>
-											new Array(selectedQuizzes.length).fill(
-												checked as boolean,
-											),
-										)
-									}
+									checked={selectAll}
+									onCheckedChange={handleSelectAllChange}
 								/>
 							</TableHead>
 							<TableHead className="w-[100px] font-bold">账号</TableHead>
@@ -248,19 +260,21 @@ export default function Accounts() {
 						</TableRow>
 					</TableHeader>
 					<TableBody>
-						{accounts.map((account, idx) => (
+						{accounts.map((account) => (
 							<TableRow key={account.id}>
 								<TableCell className="text-center">
 									{/*  className="flex items-center justify-center"> */}
 									<Checkbox
 										name="quiz-id"
 										value={account.id}
-										checked={selectedQuizzes[idx]}
+										checked={selectedAccountIds.includes(account.id)}
 										onCheckedChange={(checked) =>
-											setSelectedQuizzes((selectedQuizzes) => {
-												const newSelectedQuizzes = [...selectedQuizzes]
-												newSelectedQuizzes[idx] = checked as boolean
-												return newSelectedQuizzes
+											setSelectedAccountIds((prevIds) => {
+												if (checked) {
+													return [...prevIds, account.id]
+												} else {
+													return prevIds.filter((id) => id !== account.id)
+												}
 											})
 										}
 									/>
@@ -309,7 +323,12 @@ export default function Accounts() {
 											<Button
 												variant="ghost"
 												className="text-primary"
-												onClick={() => handleEditClick({ ...account, accountType: account.accountType as AccountType })}
+												onClick={() =>
+													handleEditClick({
+														...account,
+														accountType: account.accountType as AccountType,
+													})
+												}
 											>
 												编辑
 											</Button>
@@ -371,7 +390,12 @@ export default function Accounts() {
 											<Button
 												variant="ghost"
 												className="text-primary"
-												onClick={() => handleResetPwdClick({ ...account, accountType: account.accountType as AccountType })}
+												onClick={() =>
+													handleResetPwdClick({
+														...account,
+														accountType: account.accountType as AccountType,
+													})
+												}
 											>
 												重置密码
 											</Button>
