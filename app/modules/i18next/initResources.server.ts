@@ -16,7 +16,6 @@ const translationsFiles = import.meta.glob('/app/**/translations/*.*.json', {
 })
 
 Object.keys(translationsFiles).forEach((key) => {
-	console.log(`key: ${key}`)
 	const [namespace, lng] =
 		key.split('/')?.slice(-1)[0]?.split('.').slice(0, -1) ?? []
 	if (!lng || !namespace) return

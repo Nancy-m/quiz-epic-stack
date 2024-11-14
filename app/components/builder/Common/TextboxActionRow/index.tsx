@@ -1,4 +1,5 @@
 import { useId, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '#app/components/ui/button.js'
 import { Checkbox } from '#app/components/ui/checkbox.js'
 import { Icon } from '#app/components/ui/icon.js'
@@ -17,9 +18,20 @@ import {
 	SelectContent,
 } from '#app/components/ui/select.js'
 import { Separator } from '#app/components/ui/separator.js'
-import { DoneEditingButton, RequiredCheckbox } from './ActionRow'
+import { type I18nHandle } from '#app/modules/i18next/util.js'
+import { DoneEditingButton } from '../DoneEditingButton'
+import { RequiredCheckbox } from '../RequiredCheckbox'
+
+const handle: I18nHandle = {
+	i18n: [
+		'TextboxActionRow',
+		...RequiredCheckbox.handle.i18n,
+		...DoneEditingButton.handle.i18n,
+	],
+}
 
 export const TextboxActionRow = () => {
+	const { t } = useTranslation(['TextboxActionRow'])
 	const [showLengthOptions, setShowLengthOptions] = useState<boolean>(false)
 	const limitLengthId = useId()
 	const disablePastingId = useId()
@@ -28,7 +40,7 @@ export const TextboxActionRow = () => {
 			<div className="flex flex-row items-center gap-2">
 				<Select>
 					<SelectTrigger className="w-24">
-						<SelectValue placeholder="Select a value" />
+						<SelectValue placeholder={t('select-a-value')} />
 					</SelectTrigger>
 					<SelectContent>
 						<SelectItem value="1">1</SelectItem>
@@ -38,7 +50,7 @@ export const TextboxActionRow = () => {
 				<Popover modal={true}>
 					<PopoverTrigger asChild>
 						<Button className="inline-flex items-center gap-2" variant="ghost">
-							Options
+							{t('options')}
 							<Icon name="chevron-down"></Icon>
 						</Button>
 					</PopoverTrigger>
@@ -54,10 +66,10 @@ export const TextboxActionRow = () => {
 										setShowLengthOptions(checked as boolean)
 									}
 								/>
-								<div>Limit Length</div>
+								<div>{t('limit-length')}</div>
 							</label>
 							<div className="flex flex-row items-center gap-2">
-								<Label>Min</Label>
+								<Label className="text-nowrap">{t('min')}</Label>
 								<Input
 									type="number"
 									className="col-span-2"
@@ -65,7 +77,7 @@ export const TextboxActionRow = () => {
 									disabled={!showLengthOptions}
 								/>
 								<Separator orientation="vertical" />
-								<Label>Max</Label>
+								<Label className="text-nowrap">{t('max')}</Label>
 								<Input
 									type="number"
 									className="col-span-2"
@@ -80,7 +92,7 @@ export const TextboxActionRow = () => {
 								<div className="col-span-1 flex items-center justify-center">
 									<Checkbox id={`${disablePastingId}-disable-pasting`} />
 								</div>
-								<div className="col-span-4">Disable Pasting</div>
+								<div className="col-span-4">{t('disable-pasting')}</div>
 							</label>
 						</div>
 					</PopoverContent>
@@ -93,3 +105,5 @@ export const TextboxActionRow = () => {
 		</div>
 	)
 }
+
+TextboxActionRow.handle = handle

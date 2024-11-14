@@ -4,7 +4,6 @@ import {
 	type DragOverEvent,
 	DragOverlay,
 	type DragStartEvent,
-	useDroppable,
 } from '@dnd-kit/core'
 import {
 	arrayMove,
@@ -12,49 +11,51 @@ import {
 	verticalListSortingStrategy,
 } from '@dnd-kit/sortable'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { $path } from 'remix-routes'
-import { Draggable } from '#app/components/builder/Common/Draggable.js'
-import { SortableItem } from '#app/components/builder/Common/SortableItem.js'
-import { Wrapper } from '#app/components/builder/Common/Wrapper.js'
-import { Heading } from '#app/components/routes/dashboard/Common/Heading/index.js'
+import { Draggable } from '#app/components/builder/Common/Draggable'
+import { SortableItem } from '#app/components/builder/Common/SortableItem'
+import { SourceItem } from '#app/components/builder/Common/SourceItem/index.js'
+import { Wrapper } from '#app/components/builder/Common/Wrapper'
+import { BuilderDropZone } from '#app/components/builder/DropZone/index'
+import { Heading } from '#app/components/routes/dashboard/Common/Heading/index'
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
-import { Button } from '#app/components/ui/button.js'
-import { Icon } from '#app/components/ui/icon.js'
-import { type BuilderItem, type BuilderSourceItem } from '#app/types/builder.js'
+import { type I18nHandle } from '#app/modules/i18next/util'
+import { type BuilderItem } from '#app/types/builder'
 import {
 	isBuilderItem,
 	asTempId,
 	generateBuilderId,
 	tryDndIdAsString,
-} from '#app/utils/builder-ids.js'
+} from '#app/utils/builder/builder-ids'
 import {
 	BUILDER_SOURCE_ITEMS,
 	isSourceItem,
 	findSourceItem,
 	createBuilderItem,
-} from '#app/utils/builder-source-items.js'
+	builderSourceItemsHandles,
+} from '#app/utils/builder/builder-source-items'
 
-export const handle: BreadcrumbHandle = {
+export const handle: BreadcrumbHandle & I18nHandle = {
 	breadcrumb: {
-		title: 'Builder',
+		title: 'builder-page-name',
+		namespace: 'builder',
 		path: $path('/dashboard/builder'),
 	},
-}
-
-const SourceItem = ({ item }: { item: BuilderSourceItem }) => {
-	return (
-		<Button className="w-full" variant="secondary">
-			<Icon name={item.icon}>{item.label}</Icon>
-		</Button>
-	)
+	i18n: [
+		'builder',
+		...BuilderDropZone.handle.i18n,
+		...SourceItem.handle.i18n,
+		...builderSourceItemsHandles.i18n,
+	],
 }
 
 export default function Builder() {
+	const { t } = useTranslation('builder')
 	const [activeId, setActiveId] = useState<string | null>(null)
 	const [builderItems, setBuilderItems] = useState<BuilderItem[]>([])
 
 	const handleDragOver = ({ active, over }: DragOverEvent) => {
-		console.log('handleDragOver', active, over)
 		let activeId: string
 		try {
 			activeId = tryDndIdAsString(active?.id)
@@ -187,7 +188,7 @@ export default function Builder() {
 					<DragOverlay>
 						{activeId && isBuilderItem(activeId) && (
 							<Wrapper
-								labelText="Moving..."
+								labelText={t('moving')}
 								WrapperHandleProps={{ id: activeId }}
 							>
 								<div />
@@ -205,19 +206,5 @@ export default function Builder() {
 				)}
 			</DndContext>
 		</>
-	)
-}
-
-const BuilderDropZone = ({ id }: { id: string }) => {
-	const { isOver, setNodeRef } = useDroppable({ id })
-	return (
-		<div
-			ref={setNodeRef}
-			className={`flex h-full w-full items-center justify-center rounded-lg border-2 border-dashed ${
-				isOver ? 'border-blue-500 bg-blue-100' : 'border-gray-300'
-			}`}
-		>
-			Drop items here
-		</div>
 	)
 }

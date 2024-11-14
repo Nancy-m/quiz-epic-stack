@@ -5,6 +5,7 @@ import { MultiChoice } from '#app/components/builder/MultiChoice'
 import { SelectBox } from '#app/components/builder/SelectBox'
 import { SingleChoice } from '#app/components/builder/SingleChoice'
 import { TextAreaQuery } from '#app/components/builder/TextArea'
+import { type I18nHandle } from '#app/modules/i18next/util.js'
 import { type BuilderItem, type BuilderSourceItem } from '#app/types/builder'
 import { asTempId, getTypeFromSourceId } from './builder-ids'
 
@@ -14,41 +15,45 @@ import { asTempId, getTypeFromSourceId } from './builder-ids'
 export const BUILDER_SOURCE_ITEMS: readonly BuilderSourceItem[] = [
 	{
 		id: 'source_single-select',
-		label: 'Single Select',
 		icon: 'square-square',
 		component: SingleChoice,
+		translationKey: 'single-select',
 	},
 	{
 		id: 'source_multi-select',
-		label: 'Multi Select',
 		icon: 'square-stack',
 		component: MultiChoice,
+		translationKey: 'multi-select',
 	},
 	{
 		id: 'source_select-box',
-		label: 'Select Box',
 		icon: 'panel-top-open',
 		component: SelectBox,
+		translationKey: 'select-box',
 	},
 	{
 		id: 'source_fill-in-the-blank',
-		label: 'Fill in the Blank',
 		icon: 'pencil-line',
 		component: FillInTheBlank,
+		translationKey: 'fill-in-the-blank',
 	},
 	{
 		id: 'source_text-area',
-		label: 'Text Area',
 		icon: 'notebook-pen',
 		component: TextAreaQuery,
+		translationKey: 'text-area',
 	},
 	{
 		id: 'source_matrix-single',
-		label: 'Matrix Single',
 		icon: 'layout-grid',
 		component: MatrixSingle,
+		translationKey: 'matrix-single',
 	},
 ] as const
+
+export const builderSourceItemsHandles: I18nHandle = {
+	i18n: BUILDER_SOURCE_ITEMS.flatMap((item) => item.component.handle.i18n),
+}
 
 /**
  * Creates a new builder item from a source item
