@@ -55,7 +55,7 @@ export const AccountsHeader = ({
           </Dialog>
           <Button className="flex-shrink-0">
             <Icon name="plus" scale={2}>
-              创建
+              {t('create')}
             </Icon>
           </Button>
         </div>
@@ -64,7 +64,7 @@ export const AccountsHeader = ({
         <div className="flex flex-row gap-2">
           <div className="relative">
             <Icon name="search" className="absolute left-2 top-1/2 -translate-y-1/2" />
-            <Input placeholder="请输入账号或姓名" className="pl-8" />
+            <Input placeholder={t('search-placeholder')} className="pl-8" />
           </div>
           <div className="relative">
             <Select>

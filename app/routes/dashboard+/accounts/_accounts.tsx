@@ -48,10 +48,10 @@ export default function Accounts() {
     if (selectedAccountIds .length === 0) {
       console.log('请先选择要删除的账号')
     } else {
-      const accountsToDelete = accounts.filter((account: Account) =>
+      const accountsToDelete = accounts.filter((account) =>
         selectedAccountIds.includes(account.id)
       )
-      const accountNames = accountsToDelete.map((account: Account) => account.name)
+      const accountNames = accountsToDelete.map((account) => account.name)
       const newAccountNamesString = accountNames.length > 0 ? accountNames.join(', ') : ''
       setAccountNamesString(newAccountNamesString)
       const accountToSet = accountsToDelete.length > 0 ? accountsToDelete[0] : null

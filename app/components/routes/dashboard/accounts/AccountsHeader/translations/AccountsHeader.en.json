@@ -1,9 +1,9 @@
 {
-	"home": "Home",
-	"notifications": "Notifications",
-	"accounts": "Accounts",
-	"quizzes": "Quizzes",
-	"questions": "Questions",
-	"settings": "Settings",
+	"query": "Query",
+	"reset": "Reset",
+	"status": "Status",
+	"role": "Role",
+	"search-placeholder": "Account or Name",
+	"create": "Create",
   "delete": "Delete"
 }
