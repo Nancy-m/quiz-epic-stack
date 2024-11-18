@@ -5,5 +5,15 @@
 	"role": "角色",
 	"search-placeholder": "账号、姓名",
 	"create": "创建",
-  "delete": "删除"
+  "delete": "删除",
+	"deleteDialog": "确认删除？",
+	"dialog": {
+		"title": "删除账号",
+		"content": "确认从列表中删除账号",
+		"confirm": "确认",
+		"cancel": "取消",
+		"success": "删除成功",
+		"error": "删除失败"
+	}
 }
+

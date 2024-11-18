@@ -5,5 +5,13 @@
 	"role": "Role",
 	"search-placeholder": "Account or Name",
 	"create": "Create",
-  "delete": "Delete"
+  "delete": "Delete",
+	"dialog": {
+		"title": "Delete account",
+		"content": "Are you sure to delete the account",
+		"confirm": "Confirm delete",
+		"cancel": "Cancel",
+		"success": "Success",
+		"error": "Error"
+	}
 }

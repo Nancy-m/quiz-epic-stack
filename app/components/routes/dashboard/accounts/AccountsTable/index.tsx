@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Badge } from '#app/components/ui/badge'
 import { Button } from '#app/components/ui/button'
 import { Checkbox } from '#app/components/ui/checkbox'
@@ -66,7 +67,7 @@ export function AccountsTable({
     setSelectAll(checked)
     setSelectedAccountIds(checked ? accounts.map((account) => account.id) : [])
   }
-
+  const { t } = useTranslation('AccountsTable')
   return (
     <Table>
       <TableHeader>
@@ -74,16 +75,16 @@ export function AccountsTable({
           <TableHead className="flex items-center justify-center font-bold">
             <Checkbox checked={selectAll} onCheckedChange={handleSelectAllChange} />
           </TableHead>
-          <TableHead className="w-[100px] font-bold">账号</TableHead>
-          <TableHead className="font-bold">姓名</TableHead>
-          <TableHead className="font-bold">电话</TableHead>
-          <TableHead className="font-bold">邮箱</TableHead>
-          <TableHead className="font-bold">账号类型</TableHead>
-          <TableHead className="font-bold">角色</TableHead>
-          <TableHead className="font-bold">操作人</TableHead>
-          <TableHead className="font-bold">操作时间</TableHead>
-          <TableHead className="font-bold">状态</TableHead>
-          <TableHead className="text-right font-bold">操作</TableHead>
+          <TableHead className="w-[100px] font-bold">{t('account')}</TableHead>
+          <TableHead className="font-bold">{t('name')}</TableHead>
+          <TableHead className="font-bold">{t('mobile')}</TableHead>
+          <TableHead className="font-bold">{t('email')}</TableHead>
+          <TableHead className="font-bold">{t('type')}</TableHead>
+          <TableHead className="font-bold">{t('role')}</TableHead>
+          <TableHead className="font-bold">{t('updator')}</TableHead>
+          <TableHead className="font-bold">{t('updateTime')}</TableHead>
+          <TableHead className="font-bold">{t('status')}</TableHead>
+          <TableHead className="text-right font-bold">{t('actions')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -94,15 +95,13 @@ export function AccountsTable({
                 name="quiz-id"
                 value={account.id}
                 checked={selectedAccountIds.includes(account.id)}
-                onCheckedChange={(checked) =>
-                  setSelectedAccountIds((prevIds) => {
-                    if (checked) {
-                      return [...prevIds, account.id]
-                    } else {
-                      return prevIds.filter((id) => id !== account.id)
-                    }
-                  })
-                }
+                onCheckedChange={(checked) => {
+                  if (checked) {
+                    setSelectedAccountIds([...selectedAccountIds, account.id]);
+                  } else {
+                    setSelectedAccountIds(selectedAccountIds.filter((id) => id !== account.id));
+                  }
+                }}
               />
             </TableCell>
             <TableCell>{account.account}</TableCell>
@@ -139,7 +138,7 @@ export function AccountsTable({
                     className="text-primary"
                     onClick={() => handleEditClick(account)}
                   >
-                    编辑
+                    {t('edit')}
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
@@ -177,7 +176,7 @@ export function AccountsTable({
                     className="text-primary"
                     onClick={() => handleResetPwdClick(account)}
                   >
-                    重置密码
+                    {t('reset')}
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
@@ -203,4 +202,8 @@ export function AccountsTable({
       </TableBody>
     </Table>
   )
+}
+
+AccountsTable.handle = {
+	i18n: ['AccountsTable'],
 }

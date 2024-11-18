@@ -1,0 +1,12 @@
+{
+	"edit": "Edit",
+	"reset": "Reset PWD",
+	"mobile": "Mobile",
+	"email": "Email",
+	"type": "Type",
+	"role": "Role",
+	"updator": "Changed by",
+  "updateTime": "Changed at",
+	"status": "Status",
+	"actions": "Operations"
+}

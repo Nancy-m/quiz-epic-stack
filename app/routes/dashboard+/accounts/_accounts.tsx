@@ -5,6 +5,7 @@ import { $path } from 'remix-routes'
 import { AccountsHeader } from '#app/components/routes/dashboard/accounts/AccountsHeader'
 import { AccountsPagination } from '#app/components/routes/dashboard/accounts/AccountsPagination'
 import { AccountsTable } from '#app/components/routes/dashboard/accounts/AccountsTable'
+
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
 import { type I18nHandle } from '#app/modules/i18next/util'
 import accounts from '#app/sampleData/accounts'
@@ -28,7 +29,7 @@ export const handle: BreadcrumbHandle & I18nHandle = {
     title: 'Accounts',
     path: $path('/dashboard/accounts'),
   },
-  i18n: ['accounts',...AccountsHeader.handle.i18n],
+  i18n: ['accounts',...AccountsHeader.handle.i18n,...AccountsTable.handle.i18n,],
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {

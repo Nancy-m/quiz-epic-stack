@@ -1,0 +1,16 @@
+{
+	"accounts": "Account",
+	"name": "Name",
+	"mobile": "Mobile",
+	"type": "Type",
+	"role": "Role",
+	"updator": "Changed by",
+  "updateTime": "Changed at",
+	"status": "Status",
+	"actions": "Operations",
+	"dialog": {
+		"title": "编辑账号",
+		"name": "姓名",
+		"mobile": "电话"
+	}
+}

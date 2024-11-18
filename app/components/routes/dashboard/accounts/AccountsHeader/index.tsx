@@ -34,20 +34,20 @@ export const AccountsHeader = ({
           <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>删除账号</DialogTitle>
+                <DialogTitle>{t('dialog.title')}</DialogTitle>
                 <DialogDescription>
-                  确认将账号 [{accountNamesString}] 从列表中删除？
+                  {t('dialog.content')} [{accountNamesString}]？
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
                 <DialogClose asChild>
                   <Button size="sm" variant="outline">
-                    取消
+                    {t('cancel')}
                   </Button>
                 </DialogClose>
                 <DialogClose asChild>
                   <Button size="sm" variant="destructive" onClick={confirmDelete}>
-                    确认删除
+                    {t('confirm')}
                   </Button>
                 </DialogClose>
               </DialogFooter>
@@ -69,7 +69,7 @@ export const AccountsHeader = ({
           <div className="relative">
             <Select>
               <SelectTrigger>
-                <SelectValue placeholder="请选择角色" />
+                <SelectValue placeholder={t('role')} />
               </SelectTrigger>
               <SelectContent className="flex-0">
                 <SelectItem value="1">运营人员</SelectItem>
@@ -80,7 +80,7 @@ export const AccountsHeader = ({
           <div className="relative">
             <Select>
               <SelectTrigger>
-                <SelectValue placeholder="请选择状态" />
+                <SelectValue placeholder={t('status')} />
               </SelectTrigger>
               <SelectContent className="flex-0">
                 <SelectItem value="1">正常</SelectItem>
@@ -88,8 +88,8 @@ export const AccountsHeader = ({
               </SelectContent>
             </Select>
           </div>
-          <Button className="flex-shrink-0">重置</Button>
-          <Button className="flex-shrink-0">查询</Button>
+          <Button className="flex-shrink-0">{t('reset')}</Button>
+          <Button className="flex-shrink-0">{t('query')}</Button>
         </div>
       </div>
     </>

@@ -1,0 +1,16 @@
+{
+	"accounts": "账号",
+	"name": "姓名",
+	"mobile": "电话",
+	"type": "账号类型",
+	"role": "角色",
+	"updator": "修改人",
+  "updateTime": "修改时间",
+	"status": "状态",
+	"actions": "操作",
+	"dialog": {
+		"title": "编辑账号",
+		"name": "姓名",
+		"mobile": "电话"
+	}
+}
