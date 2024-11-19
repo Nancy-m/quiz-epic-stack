@@ -143,7 +143,7 @@ export function AccountsTable({
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>编辑账号</DialogTitle>
+                    <DialogTitle>{t('dialogEdit.title')}</DialogTitle>
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">

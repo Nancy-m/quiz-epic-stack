@@ -8,7 +8,7 @@
   "updateTime": "修改时间",
 	"status": "状态",
 	"actions": "操作",
-	"dialog": {
+	"dialogEdit": {
 		"title": "编辑账号",
 		"name": "姓名",
 		"mobile": "电话"
