@@ -9,6 +9,7 @@ import { AccountsTable } from '#app/components/routes/dashboard/accounts/Account
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
 import { type I18nHandle } from '#app/modules/i18next/util'
 import accounts from '#app/sampleData/accounts'
+
 enum AccountType {
   Admin = 'Admin',
   User = 'User'
@@ -47,6 +48,28 @@ export default function Accounts() {
   const [selectedAccountIds, setSelectedAccountIds] = useState<number[]>([])
   const [accountNamesString, setAccountNamesString] = useState('')
   const [selectAll, setSelectAll] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    setSelectedAccountIds([])
+    setSelectAll(false)
+  }
+
+  const handlePageSizeChange = (newSize: number) => {
+    setPageSize(newSize)
+    setCurrentPage(1)
+    setSelectedAccountIds([])
+    setSelectAll(false)
+  }
+
+  // 计算分页
+  const totalItems = accounts.length
+  const totalPages = Math.ceil(totalItems / pageSize)
+  const startIndex = (currentPage - 1) * pageSize
+  const endIndex = Math.min(startIndex + pageSize, totalItems)
+  const currentAccounts = accounts.slice(startIndex, endIndex)
 
   const handleDeleteClick = () => {
     if (selectedAccountIds .length === 0) {
@@ -98,7 +121,14 @@ export default function Accounts() {
           handleEditClick={handleEditClick}
           handleResetPwdClick={handleResetPwdClick}
         />
-        <AccountsPagination />
+        <AccountsPagination 
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageChange={handlePageChange}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </Form>
     </div>
   )

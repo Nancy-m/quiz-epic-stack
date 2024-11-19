@@ -36,7 +36,7 @@ export const AccountsHeader = ({
               <DialogHeader>
                 <DialogTitle>{t('dialog.title')}</DialogTitle>
                 <DialogDescription>
-                  {t('dialog.content')} [{accountNamesString}]？
+                  {t('dialog.content', { account: `[${accountNamesString.split(',').join('、')}]` })}
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>

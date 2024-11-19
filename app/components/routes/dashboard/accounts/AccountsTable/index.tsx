@@ -167,24 +167,24 @@ export function AccountsTable({
                   </DialogHeader>
                   <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="name" className="text-right">账号</Label>
+                      <Label htmlFor="name" className="text-right">{t('dialogEdit.account')}</Label>
                       <Input id="name" defaultValue={account.account} className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="username" className="text-right">姓名</Label>
+                      <Label htmlFor="username" className="text-right">{t('dialogEdit.name')}</Label>
                       <Input id="username" defaultValue={account.name} className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="mobile" className="text-right">电话</Label>
+                      <Label htmlFor="mobile" className="text-right">{t('dialogEdit.mobile')}</Label>
                       <Input id="mobile" defaultValue={account.mobile} className="col-span-3" />
                     </div>
                   </div>
                   <DialogFooter>
                     <DialogClose asChild>
-                      <Button type="submit" size="sm" variant="outline">取消</Button>
+                      <Button type="submit" size="sm" variant="outline">{t('dialogEdit.cancel')}</Button>
                     </DialogClose>
                     <DialogClose asChild>
-                      <Button type="submit" size="sm" variant="default">确认</Button>
+                      <Button type="submit" size="sm" variant="default">{t('dialogEdit.save')}</Button>
                     </DialogClose>
                   </DialogFooter>
                 </DialogContent>
@@ -201,17 +201,17 @@ export function AccountsTable({
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
-                    <DialogTitle>重置密码</DialogTitle>
+                    <DialogTitle>{t('dialogReset.title')}</DialogTitle>
                     <DialogDescription>
-                      确认重置账号{account.account}的密码？
+                      {t('dialogReset.description', { account: account.account })}
                     </DialogDescription>
                   </DialogHeader>
                   <DialogFooter>
                     <DialogClose asChild>
-                      <Button type="submit" size="sm" variant="outline">取消</Button>
+                      <Button type="submit" size="sm" variant="outline">{t('dialogReset.cancel')}</Button>
                     </DialogClose>
                     <DialogClose asChild>
-                      <Button type="submit" size="sm" variant="default">确认</Button>
+                      <Button type="submit" size="sm" variant="default">{t('dialogReset.save')}</Button>
                     </DialogClose>
                   </DialogFooter>
                 </DialogContent>

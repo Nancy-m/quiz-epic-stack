@@ -8,7 +8,7 @@
   "delete": "Delete",
 	"dialog": {
 		"title": "Delete account",
-		"content": "Are you sure to delete the account",
+		"content": "Are you sure to delete the account {{account}}?",
 		"confirm": "Confirm delete",
 		"cancel": "Cancel",
 		"success": "Success",

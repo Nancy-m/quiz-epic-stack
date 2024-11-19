@@ -8,5 +8,19 @@
 	"updator": "修改人",
   "updateTime": "修改时间",
 	"status": "状态",
-	"actions": "操作"
+	"actions": "操作",
+	"dialogEdit": {
+		"title": "编辑账号",
+		"account": "账号",
+		"name": "姓名",
+		"mobile": "电话",
+		"cancel": "取消",
+		"save": "确认"
+	},
+	"dialogReset": {
+		"title": "重置密码",
+		"description": "确认重置账号{{account}}的密码？",
+		"cancel": "取消",
+		"save": "确认"
+	}
 }

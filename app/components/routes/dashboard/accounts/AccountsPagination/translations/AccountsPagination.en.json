@@ -1,0 +1,9 @@
+{
+	"previous": "Previous",
+	"next": "Next",
+	"total": "Total {{count}} items",
+	"itemsPerPage": "{{count}} / page",
+	"itemsPerPage.suffix": "items per page",
+	"jumpTo": "Go to",
+	"page": "page"
+}

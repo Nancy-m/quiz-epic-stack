@@ -1,0 +1,9 @@
+{
+  "previous": "上一页",
+  "next": "下一页",
+  "total": "共 {{count}} 条",
+  "itemsPerPage": "{{count}}条/页",
+  "itemsPerPage.suffix": "",
+  "jumpTo": "跳至",
+  "page": "页"
+}

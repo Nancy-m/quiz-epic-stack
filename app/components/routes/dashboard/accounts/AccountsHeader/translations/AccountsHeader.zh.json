@@ -9,7 +9,7 @@
 	"deleteDialog": "确认删除？",
 	"dialog": {
 		"title": "删除账号",
-		"content": "确认从列表中删除账号",
+		"content": "确认将账号{{account}}从列表中删除？",
 		"confirm": "确认",
 		"cancel": "取消",
 		"success": "删除成功",
