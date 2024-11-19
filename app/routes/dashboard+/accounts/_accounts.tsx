@@ -9,7 +9,11 @@ import { AccountsTable } from '#app/components/routes/dashboard/accounts/Account
 import { type BreadcrumbHandle } from '#app/components/routes/dashboard/DashboardBreadcrumbs'
 import { type I18nHandle } from '#app/modules/i18next/util'
 import accounts from '#app/sampleData/accounts'
-
+enum AccountType {
+  Admin = 'Admin',
+  User = 'User'
+  // 其他的类型
+}
 type Account = {
   id: number
   uid: string
@@ -17,13 +21,12 @@ type Account = {
   name: string
   mobile: string
   email: string
-  accountType: 'TypeA' | 'TypeB'
+  accountType: AccountType
   role: string
   operator: string
   availability: { start: string; end: string }
   status: string
 }
-
 export const handle: BreadcrumbHandle & I18nHandle = {
   breadcrumb: {
     title: 'Accounts',
@@ -39,7 +42,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 }
 
 export default function Accounts() {
-  const [selectedAccount, setSelectedAccount] = useState<Account | null>(null)
+  const [, setSelectedAccount] = useState<Account | null>(null)
   const [showConfirmDialog, setShowConfirmDialog] = useState(false)
   const [selectedAccountIds, setSelectedAccountIds] = useState<number[]>([])
   const [accountNamesString, setAccountNamesString] = useState('')
@@ -55,8 +58,8 @@ export default function Accounts() {
       const accountNames = accountsToDelete.map((account) => account.name)
       const newAccountNamesString = accountNames.length > 0 ? accountNames.join(', ') : ''
       setAccountNamesString(newAccountNamesString)
-      const accountToSet = accountsToDelete.length > 0 ? accountsToDelete[0] : null
-      setSelectedAccount(accountToSet)
+      const accountToSet = accountsToDelete.length > 0 ? accountsToDelete[0] as Account : null
+      setSelectedAccount(accountToSet ?? null)
       setShowConfirmDialog(true)
       console.log(`确认将账号 [${newAccountNamesString}] 从列表中删除`)
     }
@@ -68,11 +71,11 @@ export default function Accounts() {
     setShowConfirmDialog(false)
   }
 
-  const handleEditClick = (account: Account) => {
+  const handleEditClick = (account: Account | null) => {
     setSelectedAccount(account)
   }
 
-  const handleResetPwdClick = (account: Account) => {
+  const handleResetPwdClick = (account: Account | null) => {
     setSelectedAccount(account)
   }
 

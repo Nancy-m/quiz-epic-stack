@@ -42,12 +42,12 @@ export const AccountsHeader = ({
               <DialogFooter>
                 <DialogClose asChild>
                   <Button size="sm" variant="outline">
-                    {t('cancel')}
+                    {t('dialog.cancel')}
                   </Button>
                 </DialogClose>
                 <DialogClose asChild>
                   <Button size="sm" variant="destructive" onClick={confirmDelete}>
-                    {t('confirm')}
+                    {t('dialog.confirm')}
                   </Button>
                 </DialogClose>
               </DialogFooter>

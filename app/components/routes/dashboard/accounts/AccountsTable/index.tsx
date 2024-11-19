@@ -7,7 +7,11 @@ import { Input } from '#app/components/ui/input'
 import { Label } from '#app/components/ui/label'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '#app/components/ui/table'
 import { cn } from '#app/utils/misc.js'
-
+enum AccountType {
+  Admin = 'Admin',
+  User = 'User'
+  // 更多类型...
+}
 interface Account {
   id: number
   uid: string
@@ -15,7 +19,7 @@ interface Account {
   name: string
   mobile: string
   email: string
-  accountType: 'TypeA' | 'TypeB'
+  accountType: AccountType
   role: string
   operator: string
   availability: { start: string; end: string }
@@ -31,17 +35,22 @@ interface AccountsTableProps {
   handleEditClick: (account: Account) => void
   handleResetPwdClick: (account: Account) => void
 }
-
-const accountTypeConfig = {
-  TypeA: {
-    color: 'bg-blue-400/5 text-blue-400 border-blue-400 hover:bg-blue-400/10',
-    label: '普通员工',
-  },
-  TypeB: {
-    color: 'bg-green-400/5 text-green-400 border-green-400 hover:bg-green-400/10',
-    label: '管理员',
-  },
-}
+// interface AccountTypeConfig {
+//   [key: string]: {
+//     color: string;
+//     label: string;
+//   };
+// }
+// const accountTypeConfig: AccountTypeConfig = {
+//   TypeA: {
+//     color: 'bg-blue-400/5 text-blue-400 border-blue-400 hover:bg-blue-400/10',
+//     label: '普通员工',
+//   },
+//   TypeB: {
+//     color: 'bg-green-400/5 text-green-400 border-green-400 hover:bg-green-400/10',
+//     label: '管理员',
+//   },
+// }
 
 const accountStatuses = [
   {
@@ -53,6 +62,16 @@ const accountStatuses = [
     color: 'bg-green-400/5 text-green-400 border-green-400 hover:bg-green-400/10',
   },
 ]
+const getAccountTypeLabel = (accountType: AccountType): string => {
+  switch (accountType) {
+    case AccountType.Admin:
+      return '管理员';
+    case AccountType.User:
+      return '用户';
+    default:
+      return '未知类型';
+  }
+};
 
 export function AccountsTable({
   accounts,
@@ -109,9 +128,10 @@ export function AccountsTable({
             <TableCell>{account.mobile}</TableCell>
             <TableCell>{account.email}</TableCell>
             <TableCell className="text-center">
-              <Badge className={accountTypeConfig[account.accountType]?.color || 'text-gray-500'}>
+              {/* <Badge className={accountTypeConfig[account.accountType]?.color || 'text-gray-500'}>
                 {accountTypeConfig[account.accountType]?.label || account.accountType}
-              </Badge>
+              </Badge> */}
+              {getAccountTypeLabel(account.accountType)}
             </TableCell>
             <TableCell>{account.role}</TableCell>
             <TableCell>{account.operator}</TableCell>
